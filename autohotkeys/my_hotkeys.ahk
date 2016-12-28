@@ -32,41 +32,60 @@ Return
 ;This is my new attempt at a master upload script to work on any browser.
 
 ;Defining variables
-First := 0
-Last := 0
+MaxRefs := 20 ; This is determined by the USPTO and is hard coded.
 RefNum := 0
 RefSub := 0
 NumbOfRef := 100
 NumbOfFor := 100
 NumbOfNPL := 0
+Valid := false
 
+checkCancel(Val) {
+	; Function to check in Cancel has been clicked and, if yes, terminate the currently running thread of this script
+	if (Val) {
+		Exit
+	}
+}
+
+getRefNums() {
+	; Function to display input box and request reference numbers from user.
+	InputBox, First, First reference, Please enter the number preceeding the underscore of the FIRST reference being submitted (For Example 1 or 0001) 
+	checkCancel(ErrorLevel)
+	InputBox, Last, Last reference, Please enter the number preceeding the underscore of the LAST reference being submitted (For Example 20 or 0020) 
+	checkCancel(ErrorLevel)
+
+	Results := {"First": First, "Last": Last}
+	return Results
+}
+
+
+main(MaxRefs) {
+	While (Valid != true) {
+		Nums := getRefNums()
+		if (Nums["First"] > Nums["Last"]) {
+			MsgBox % "Please make sure that the number of the First reference is lower than the number of the Last reference"
+		} else if (Nums["Last"] - Nums["First"] + 1 > MaxRefs) {
+			MsgBox % "That is too many references.  You can only submit 20 references in one submission.  Please re-enter the numbers of the first and last references."
+		} else {
+			Valid := true
+		}
+	}
+	MsgBox % Nums["First"] " - " Nums["Last"]
+}
+
+main(MaxRefs)
 
 ;This section requests input from the user regarding the first and last numbers of the references being submitted
-While % NumbOfRef >20
+While % NumbOfRef > 20
 {
-	InputBox, First, First reference, Please enter the number preceeding the underscore of the FIRST reference being submitted (For Example 1 or 0001) 
-	InputBox, Last, Last reference, Please enter the number preceeding the underscore of the LAST reference being submitted (For Example 20 or 0020) 
-		
-	if % First > Last
-{
-		NumbOfRef := 0
-		NumbOfFor := 0
-		MsgBox % "Please make sure that the number of the First reference is lower than the number of the Last reference"
-		Break		
-}
-
-	NumbOfRef := (Last - First + 1)
-	If NumbOfRef > 20
-		MsgBox % "That is too many references.  You can only submit 20 references in one submission.  Please re-enter the numbers of the first and last references."
-}
 
 ;This section request input from the user regarding the number of foreign references to be submitted
 While % NumbOfFor > NumbOfRef
-{	
+{
 	InputBox, NumbOfFor, Foreign References, How many of the references being submitted are foreign references?	
 	If % NumbOfFor > NumbOfRef
 		MsgBox % "You cannot submit more foreign references than total references.  Please re-enter the number of foreign referneces."
-}	
+}
 
 RefNum := First - 1 + .0000
 SetFormat, float, 04.0
