@@ -109,30 +109,43 @@ checkFor(numArray) {
 }
 
 submitRef(num, maxFor, dict) {
-    browseExe := getBrowseExe() ; gets the ahk_exe of the browser
-    window := dict[browser]
+    WinGet, browseExe, ProcessName, A
+    WinGetClass, browseClass, A
+    uploadWindow := dict[browseExe]["upload"]
+    normalWindow := dict[browseExe]["normal"]
+
     foreign := (num <= maxFor)
 
     num += 0.0 ; To set to float. See note by SetFormat call in main
 
-    IfWinNotActive, %window%, , WinActivate, %window%,
-    WinWaitActive, %window%,
+    WinWait, %uploadWindow%, 
+    IfWinNotActive, %uploadWindow%, , WinActivate, %wuploadWindow%,
+    WinWaitActive, %uploadWindow%,
 
-    SendInput, {SHIFTDOWN}{TAB}{TAB}{SHIFTUP}%RefNum%{ENTER}
+    SendInput, {SHIFTDOWN}{TAB}{TAB}{SHIFTUP}%num%{ENTER}
+    Sleep, 100
 
-}
+    WinWait, ahk_class %normalWindow%
+    IfWinNotActive, ahk_class %normalWindow%, , WinActivate, ahk_class %normalWindow%,
+    WinWaitActive, ahk_class %normalWindow% 
+    Sleep, 100
 
-getBrowseExe() {
-    ; Function to get browser ahk_exe name
-    WinGet, activeprocess, ProcessName, A
-    return activeprocess
+    SendInput, {TAB}i
+    if (foreign) {
+        SendInput, {TAB}f
+    } else {
+        sendInput, {TAB}n
+    }
+    Sleep, 100
+
+
 }
 
 main() {
     ; These are the hardcoded variables.  If anything changes this is where you will need to change stuff.
     SetFormat, float, 04 ; sets float format so that when numbers are coverted to float leading 0's will pad them to set digit count to match renaming scheme
     MaxRefs := 20 ; This is determined by the USPTO and is hard coded.
-    browseDict := {"chrome.exe": "Open", "firefox.exe": "File Upload", "IEXPLORE.EXE": "Choose File to Upload"} ; dict of supported browsers and the names of the window where the files to be uploaded are selected.
+    browseDict := {"chrome.exe": {"upload": "Open", "normal": "Chrome_WidgetWin_1"}, "firefox.exe": {"upload": "File Upload", "normal": "MozillaWindowClass"}, "IEXPLORE.EXE": "Choose File to Upload"} ; dict of supported browsers and the names of the window where the files to be uploaded are selected.
 
     While (numsValid != true) {
         ; While loop to request and check First and Last numbers for validity
@@ -149,64 +162,20 @@ main() {
     totalRefs := Nums["last"] - Nums["first"] + 1 ; fixed off by one problem (if first = 1 and last = 20 there are 20 not 19)
     refNum := Nums["first"]
 
-    While (refNum <= totalrefs) {
+    While (refNum <= totalRefs) {
         ; While loop to iterate over and submit references
         submitRef(refNum, Nums["foreign"], browseDict)
         refNum += 1
+        if (refNum <= totalRefs) {
+            SendInput, {TAB 3}{SPACE}
+            Sleep 100,
+            sendInput, {SHIFTDOWN}{TAB 5}{SHIFTUP}{SPACE}
+            Sleep 100,       
+        } else {
+            MsgBox % "AutoHotkey has attempted to select all references. There should be " Nums["foreign"] " Foreign and " totalRefs - Nums["foreign"] " NPL References.  There should be a total of " refNum -1 " references.  If this is correct please click 'Upload and Validate'"
+        }
     }
 }
-
-
-
-
-; While % RefSub < NumbOfFor
-; {
-;   WinWait, Choose File to Upload,
-
-;   WinWait, ahk_class IEFrame
-;   IfWinNotActive, ahk_class IEFrame, , WinActivate, ahk_class IEFrame,
-;   WinWaitActive, ahk_class IEFrame 
-;   Send, {TAB}i
-;   Sleep, 100  
-;   Send, {TAB}f
-;   Sleep, 100
-;   If % RefSub = NumbOfRef
-;       MsgBox AutoHotkey has attempted to select all references.  There should be %NumbOfFor% Foreign and %NumbOfNPL% NPL References.  There should be a total of %RefSub% references.  If this is correct please click "Upload and Validate"
-;   Else
-;   {   
-;       SendInput, {TAB 3}{SPACE}
-;       Sleep 100,
-;       sendInput, {SHIFTDOWN}{TAB 5}{SHIFTUP}{SPACE}
-;       Sleep 100,
-;   }
-; }
-
-; While % RefSub < NumbOfRef    
-; {
-;   RefNum := (RefNum + 1.0)
-;   RefSub := (RefSub + 1)
-;   NumbOfNPL := (NumbOfNPL + 1)
-;   WinWait, Choose File to Upload,
-;   IfWinNotActive, Choose File to Upload, , WinActivate, Choose File to Upload,   
-;   WinWaitActive, Choose File to Upload, 
-;   SendInput, {SHIFTDOWN}{TAB}{TAB}{SHIFTUP}%RefNum%{ENTER}
-;   WinWait, ahk_class IEFrame
-;   IfWinNotActive, ahk_class IEFrame, , WinActivate, ahk_class IEFrame,
-;   WinWaitActive, ahk_class IEFrame 
-;   Send, {TAB}i
-;   Sleep, 100  
-;   Send, {TAB}n
-;   Sleep, 100
-;   If % RefSub = NumbOfRef
-;       MsgBox AutoHotkey has attempted to select all references.  There should be %NumbOfFor% Foreign and %NumbOfNPL% NPL References.  There should be a total of %RefSub% references.  If this is correct please click "Upload and Validate"
-;   Else
-;   {   
-;       SendInput, {TAB 3}{SPACE}
-;       Sleep 100,
-;       sendInput, {SHIFTDOWN}{TAB 5}{SHIFTUP}{SPACE}
-;       Sleep 100,
-;   }
-; }
 Return
 
 #i::
