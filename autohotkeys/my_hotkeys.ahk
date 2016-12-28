@@ -35,13 +35,12 @@ Return
 ;This is my new attempt at a master upload script to work on any browser.
 
 ;Defining variables
-MaxRefs := 20 ; This is determined by the USPTO and is hard coded.
+
 RefNum := 0
 RefSub := 0
 NumbOfRef := 100
 NumbOfFor := 100
 NumbOfNPL := 0
-Valid := false
 
 checkCancel(Val) {
 	; Function to check in Cancel has been clicked and, if yes, terminate the currently running thread of this script
@@ -61,91 +60,142 @@ getRefNums() {
 	return Results
 }
 
+getForNum() {
+	InputBox, temp, Foreign References, How many of the references being submitted are foreign references?
+	checkCancel(ErrorLevel)
+	return temp
+}
 
-main(MaxRefs) {
-	While (Valid != true) {
-		Nums := getRefNums()
-		if (Nums["First"] > Nums["Last"]) {
-			MsgBox % "Please make sure that the number of the First reference is lower than the number of the Last reference"
-		} else if (Nums["Last"] - Nums["First"] + 1 > MaxRefs) {
-			MsgBox % "That is too many references.  You can only submit 20 references in one submission.  Please re-enter the numbers of the first and last references."
-		} else {
-			Valid := true
-		}
+checkNums(numArray, maxRefs) {
+	; Function to check numArray to make sure answers are Valid
+
+	; Check to make sure first and last are both numbers.
+	if ( isNotInt(numArray["First"]) or isNotInt(numArray["Last"]) ) {
+		MsgBox % "One of your responses is not an integer.  Please only enter positive numbers for First and last."
+		return false
+
+	; Check to make sure first num is greater than 0.
+	} else if (numArray["First"] <= 0) {
+		MsgBox % "One of your numbers is less than or equal to 0.  Please only enter positive numbers for First and last."
+		return false
+
+	; Check to make sure First num is not greater than last.
+	} else if (numArray["First"] > numArray["Last"]) {
+		MsgBox % "Please make sure that the number of the Last reference is greater than the number of the First reference"
+		return false
+
+	; Check to make sure number of refs to submit is not greater than maxRefs.
+	} else if (numArray["Last"] - numArray["First"] + 1 > MaxRefs) {
+		MsgBox % "That is too many references.  You can only submit 20 references in one submission.  Please re-enter the numbers of the first and last references."
+		return false
+
+	; If all check fail then return true.
+	} else {
+		return true
 	}
-	MsgBox % Nums["First"] " - " Nums["Last"]
+
 }
 
-main(MaxRefs)
-
-;This section requests input from the user regarding the first and last numbers of the references being submitted
-While % NumbOfRef > 20
-{
+isNotInt( str ) {
+	if str is not integer
+		return true
+	return false
 }
-;This section request input from the user regarding the number of foreign references to be submitted
-While % NumbOfFor > NumbOfRef
-{
-	InputBox, NumbOfFor, Foreign References, How many of the references being submitted are foreign references?	
-	If % NumbOfFor > NumbOfRef
+
+checkFor(numArray) {
+	if (numArray["foreign"] < 0) {
+		MsgBox % "Number of Foreign references cannot be negative.  Please only enter either 0 or positive numbers."
+		return false
+	} else if (numArray["foreign"] > numArray["Last"] - numArray["First"] + 1) {
 		MsgBox % "You cannot submit more foreign references than total references.  Please re-enter the number of foreign referneces."
-}
-
-RefNum := First - 1 + .0000
-SetFormat, float, 04.0
-RefNum += 0  ; Sets Var to be 000011
-
-While % RefSub < NumbOfFor
-{
-	RefNum := (RefNum + 1.0)
-	RefSub := (RefSub + 1)
-	WinWait, Choose File to Upload,
-	IfWinNotActive, Choose File to Upload, , WinActivate, Choose File to Upload,   
-	WinWaitActive, Choose File to Upload, 
-	SendInput, {SHIFTDOWN}{TAB}{TAB}{SHIFTUP}%RefNum%{ENTER}
-	WinWait, ahk_class IEFrame
-	IfWinNotActive, ahk_class IEFrame, , WinActivate, ahk_class IEFrame,
-	WinWaitActive, ahk_class IEFrame 
-	Send, {TAB}i
-	Sleep, 100  
-	Send, {TAB}f
-	Sleep, 100
-	If % RefSub = NumbOfRef
-		MsgBox AutoHotkey has attempted to select all references.  There should be %NumbOfFor% Foreign and %NumbOfNPL% NPL References.  There should be a total of %RefSub% references.  If this is correct please click "Upload and Validate"
-	Else
-	{	
-		SendInput, {TAB 3}{SPACE}
-		Sleep 100,
-		sendInput, {SHIFTDOWN}{TAB 5}{SHIFTUP}{SPACE}
-		Sleep 100,
+		return false
+	} else {
+		return true
 	}
 }
 
-While % RefSub < NumbOfRef	
-{
-	RefNum := (RefNum + 1.0)
-	RefSub := (RefSub + 1)
-	NumbOfNPL := (NumbOfNPL + 1)
-	WinWait, Choose File to Upload,
-	IfWinNotActive, Choose File to Upload, , WinActivate, Choose File to Upload,   
-	WinWaitActive, Choose File to Upload, 
-	SendInput, {SHIFTDOWN}{TAB}{TAB}{SHIFTUP}%RefNum%{ENTER}
-	WinWait, ahk_class IEFrame
-	IfWinNotActive, ahk_class IEFrame, , WinActivate, ahk_class IEFrame,
-	WinWaitActive, ahk_class IEFrame 
-	Send, {TAB}i
-	Sleep, 100  
-	Send, {TAB}n
-	Sleep, 100
-	If % RefSub = NumbOfRef
-		MsgBox AutoHotkey has attempted to select all references.  There should be %NumbOfFor% Foreign and %NumbOfNPL% NPL References.  There should be a total of %RefSub% references.  If this is correct please click "Upload and Validate"
-	Else
-	{	
-		SendInput, {TAB 3}{SPACE}
-		Sleep 100,
-		sendInput, {SHIFTDOWN}{TAB 5}{SHIFTUP}{SPACE}
-		Sleep 100,
+
+main() {
+	MaxRefs := 20 ; This is determined by the USPTO and is hard coded.
+
+	While (numsValid != true) {
+		Nums := getRefNums()
+		numsValid := checkNums(Nums, MaxRefs)	
 	}
+	; While (forValid != true) {
+	; 	Nums["Foreign"] := getForNum()
+	; 	forValid := checkFor(Nums)
+	; }
+	MsgBox % "Nums entered = " Nums["First"] " - " Nums["Last"] ; ".  With " Nums["Foreign"] " foreign."
 }
+
+main()
+
+
+
+; ;This section request input from the user regarding the number of foreign references to be submitted
+; While % NumbOfFor > NumbOfRef
+; {
+		
+; 	
+; }
+
+; RefNum := First - 1 + .0000
+; SetFormat, float, 04.0
+; RefNum += 0  ; Sets Var to be 000011
+
+; While % RefSub < NumbOfFor
+; {
+; 	RefNum := (RefNum + 1.0)
+; 	RefSub := (RefSub + 1)
+; 	WinWait, Choose File to Upload,
+; 	IfWinNotActive, Choose File to Upload, , WinActivate, Choose File to Upload,   
+; 	WinWaitActive, Choose File to Upload, 
+; 	SendInput, {SHIFTDOWN}{TAB}{TAB}{SHIFTUP}%RefNum%{ENTER}
+; 	WinWait, ahk_class IEFrame
+; 	IfWinNotActive, ahk_class IEFrame, , WinActivate, ahk_class IEFrame,
+; 	WinWaitActive, ahk_class IEFrame 
+; 	Send, {TAB}i
+; 	Sleep, 100  
+; 	Send, {TAB}f
+; 	Sleep, 100
+; 	If % RefSub = NumbOfRef
+; 		MsgBox AutoHotkey has attempted to select all references.  There should be %NumbOfFor% Foreign and %NumbOfNPL% NPL References.  There should be a total of %RefSub% references.  If this is correct please click "Upload and Validate"
+; 	Else
+; 	{	
+; 		SendInput, {TAB 3}{SPACE}
+; 		Sleep 100,
+; 		sendInput, {SHIFTDOWN}{TAB 5}{SHIFTUP}{SPACE}
+; 		Sleep 100,
+; 	}
+; }
+
+; While % RefSub < NumbOfRef	
+; {
+; 	RefNum := (RefNum + 1.0)
+; 	RefSub := (RefSub + 1)
+; 	NumbOfNPL := (NumbOfNPL + 1)
+; 	WinWait, Choose File to Upload,
+; 	IfWinNotActive, Choose File to Upload, , WinActivate, Choose File to Upload,   
+; 	WinWaitActive, Choose File to Upload, 
+; 	SendInput, {SHIFTDOWN}{TAB}{TAB}{SHIFTUP}%RefNum%{ENTER}
+; 	WinWait, ahk_class IEFrame
+; 	IfWinNotActive, ahk_class IEFrame, , WinActivate, ahk_class IEFrame,
+; 	WinWaitActive, ahk_class IEFrame 
+; 	Send, {TAB}i
+; 	Sleep, 100  
+; 	Send, {TAB}n
+; 	Sleep, 100
+; 	If % RefSub = NumbOfRef
+; 		MsgBox AutoHotkey has attempted to select all references.  There should be %NumbOfFor% Foreign and %NumbOfNPL% NPL References.  There should be a total of %RefSub% references.  If this is correct please click "Upload and Validate"
+; 	Else
+; 	{	
+; 		SendInput, {TAB 3}{SPACE}
+; 		Sleep 100,
+; 		sendInput, {SHIFTDOWN}{TAB 5}{SHIFTUP}{SPACE}
+; 		Sleep 100,
+; 	}
+; }
 Return
 
 #i::
