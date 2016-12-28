@@ -1,3 +1,6 @@
+; Hotkey to reload script as I frequently save and edit it.
+^!r::Reload  ; Assign Ctrl-Alt-R as a hotkey to restart the script.
+
 ; script to log me into to various work sites (I know this is hilariously un-safe I just dont care).
 ^!l::
   ; Wait for the key to be released.  Use one KeyWait for each of the hotkey's modifiers.
@@ -78,7 +81,7 @@ main(MaxRefs)
 ;This section requests input from the user regarding the first and last numbers of the references being submitted
 While % NumbOfRef > 20
 {
-
+}
 ;This section request input from the user regarding the number of foreign references to be submitted
 While % NumbOfFor > NumbOfRef
 {
