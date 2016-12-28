@@ -34,13 +34,7 @@ Return
 #z::
 ;This is my new attempt at a master upload script to work on any browser.
 
-;Defining variables
-
-RefNum := 0
-RefSub := 0
-NumbOfRef := 100
-NumbOfFor := 100
-NumbOfNPL := 0
+main()
 
 checkCancel(Val) {
 	; Function to check in Cancel has been clicked and, if yes, terminate the currently running thread of this script
@@ -114,40 +108,52 @@ checkFor(numArray) {
 	}
 }
 
+submitFor(num) {
+	num += 0.0 ; To set to float. See note by SetFormat call in main
+	MsgBox % "Foreign reference no. " num
+
+}
+
+submitNPL(num) {
+	num += 0.0 ; To set to float. See note by SetFormat call in main
+	MsgBox % "NPL reference no. " num
+}
+
 
 main() {
+	SetFormat, float, 04 ; sets float format so that when numbers are coverted to float leading 0's will pad them to set digit count to match renaming scheme
 	MaxRefs := 20 ; This is determined by the USPTO and is hard coded.
 
 	While (numsValid != true) {
 		Nums := getRefNums()
 		numsValid := checkNums(Nums, MaxRefs)	
 	}
-	; While (forValid != true) {
-	; 	Nums["Foreign"] := getForNum()
-	; 	forValid := checkFor(Nums)
-	; }
-	MsgBox % "Nums entered = " Nums["First"] " - " Nums["Last"] ; ".  With " Nums["Foreign"] " foreign."
+	While (forValid != true) {
+		Nums["Foreign"] := getForNum()
+		forValid := checkFor(Nums)
+	}
+
+	totalRefs := Nums["last"] - Nums["first"] + 1 ; fixed off by one problem (if first = 1 and last = 20 there are 20 not 19)
+	totalFors := Nums["foreign"]
+	refNum := Nums["first"]
+
+	While (refNum <= totalFors) {
+		submitFor(refNum)
+		refNum += 1
+	}
+	while (refNum <= totalRefs) {
+		submitNPL(refNum)
+		refNum += 1
+	}
+
+
 }
 
-main()
 
 
-
-; ;This section request input from the user regarding the number of foreign references to be submitted
-; While % NumbOfFor > NumbOfRef
-; {
-		
-; 	
-; }
-
-; RefNum := First - 1 + .0000
-; SetFormat, float, 04.0
-; RefNum += 0  ; Sets Var to be 000011
 
 ; While % RefSub < NumbOfFor
 ; {
-; 	RefNum := (RefNum + 1.0)
-; 	RefSub := (RefSub + 1)
 ; 	WinWait, Choose File to Upload,
 ; 	IfWinNotActive, Choose File to Upload, , WinActivate, Choose File to Upload,   
 ; 	WinWaitActive, Choose File to Upload, 
@@ -236,7 +242,7 @@ While % NumbOfFor > NumbOfRef
 	InputBox, NumbOfFor, Foreign References, How many of the references being submitted are foreign references?	
 	If % NumbOfFor > NumbOfRef
 		MsgBox % "You cannot submit more foreign references than total references.  Please re-enter the number of foreign referneces."
-}	
+}
 
 RefNum := First - 1 + .0000
 SetFormat, float, 04.0
