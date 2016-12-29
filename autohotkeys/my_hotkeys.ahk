@@ -139,7 +139,9 @@ main() {
     ; These are the hardcoded variables.  If anything changes this is where you will need to change stuff.
     SetFormat, float, 04 ; sets float format so that when numbers are coverted to float leading 0's will pad them to set digit count to match renaming scheme
     MaxRefs := 20 ; This is determined by the USPTO and is hard coded.
-    browseDict := {"chrome.exe": {"upload": "Open", "normal": "Chrome_WidgetWin_1"}, "firefox.exe": {"upload": "File Upload", "normal": "MozillaWindowClass"}, "IEXPLORE.EXE": {"upload": "Choose File to Upload", "normal": "IEFrame"}} ; dict of supported browsers and the names of the window where the files to be uploaded are selected.
+    browseDict := ({"chrome.exe": {"upload": "Open", "normal": "Chrome_WidgetWin_1"}
+        , "firefox.exe": {"upload": "File Upload", "normal": "MozillaWindowClass"}
+        , "IEXPLORE.EXE": {"upload": "Choose File to Upload", "normal": "IEFrame"}}) ; dict of supported browsers and the names of the window where the files to be uploaded are selected.
 
     While (numsValid != true) {
         ; While loop to request and check First and Last numbers for validity
