@@ -109,6 +109,7 @@ checkFor(numArray) {
 }
 
 submitRef(num, maxFor, dict) {
+    submitDelay := 100 ; 100 is default. Increase this number to slow down the submission process if it is breaking.  Do not set below 100 or errors may occur.
     WinGet, browseExe, ProcessName, A
     WinGetClass, browseClass, A
     uploadWindow := dict[browseExe]["upload"]
@@ -116,36 +117,29 @@ submitRef(num, maxFor, dict) {
 
     foreign := (num <= maxFor)
 
-    num += 0.0 ; To set to float. See note by SetFormat call in main
+    num += 0.0 ; To set to float to format properly. For more info see note by SetFormat call in main
 
-    WinWait, %uploadWindow%, 
     IfWinNotActive, %uploadWindow%, , WinActivate, %wuploadWindow%,
     WinWaitActive, %uploadWindow%,
-
     SendInput, {SHIFTDOWN}{TAB}{TAB}{SHIFTUP}%num%{ENTER}
-    Sleep, 100
+    Sleep, %submitDelay%
 
-    WinWait, ahk_class %normalWindow%
     IfWinNotActive, ahk_class %normalWindow%, , WinActivate, ahk_class %normalWindow%,
     WinWaitActive, ahk_class %normalWindow% 
-    Sleep, 100
-
     SendInput, {TAB}i
     if (foreign) {
         SendInput, {TAB}f
     } else {
         sendInput, {TAB}n
     }
-    Sleep, 100
-
-
+    Sleep, %submitDelay%
 }
 
 main() {
     ; These are the hardcoded variables.  If anything changes this is where you will need to change stuff.
     SetFormat, float, 04 ; sets float format so that when numbers are coverted to float leading 0's will pad them to set digit count to match renaming scheme
     MaxRefs := 20 ; This is determined by the USPTO and is hard coded.
-    browseDict := {"chrome.exe": {"upload": "Open", "normal": "Chrome_WidgetWin_1"}, "firefox.exe": {"upload": "File Upload", "normal": "MozillaWindowClass"}, "IEXPLORE.EXE": "Choose File to Upload"} ; dict of supported browsers and the names of the window where the files to be uploaded are selected.
+    browseDict := {"chrome.exe": {"upload": "Open", "normal": "Chrome_WidgetWin_1"}, "firefox.exe": {"upload": "File Upload", "normal": "MozillaWindowClass"}, "IEXPLORE.EXE": {"upload": "Choose File to Upload", "normal": "IEFrame"}} ; dict of supported browsers and the names of the window where the files to be uploaded are selected.
 
     While (numsValid != true) {
         ; While loop to request and check First and Last numbers for validity
@@ -160,11 +154,13 @@ main() {
 
     ; Variables used for filing
     totalRefs := Nums["last"] - Nums["first"] + 1 ; fixed off by one problem (if first = 1 and last = 20 there are 20 not 19)
+    forRefs := Nums["foreign"]
+    NPLRefs := totalRefs - Nums["foreign"]
     refNum := Nums["first"]
 
     While (refNum <= totalRefs) {
         ; While loop to iterate over and submit references
-        submitRef(refNum, Nums["foreign"], browseDict)
+        submitRef(refNum, forRefs, browseDict)
         refNum += 1
         if (refNum <= totalRefs) {
             SendInput, {TAB 3}{SPACE}
@@ -172,7 +168,7 @@ main() {
             sendInput, {SHIFTDOWN}{TAB 5}{SHIFTUP}{SPACE}
             Sleep 100,       
         } else {
-            MsgBox % "AutoHotkey has attempted to select all references. There should be " Nums["foreign"] " Foreign and " totalRefs - Nums["foreign"] " NPL References.  There should be a total of " refNum -1 " references.  If this is correct please click 'Upload and Validate'"
+            MsgBox % "AutoHotkey has attempted to select all references. There should be " forRefs " Foreign and " NPLRefs " NPL References.  There should be a total of " totalRefs " references.  If this is correct please click 'Upload and Validate'"
         }
     }
 }
