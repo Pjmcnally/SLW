@@ -57,6 +57,7 @@ getRefNums() {
 }
 
 getForNum() {
+    ; function to display input box and request the number of foreign references from user.
     InputBox, temp, Foreign References, How many of the references being submitted are foreign references?
     checkCancel(ErrorLevel)
     return temp
@@ -93,12 +94,14 @@ checkNums(numArray, maxRefs) {
 }
 
 isNotInt( str ) {
+    ; function to check if value is integer.
     if str is not integer
         return true
     return false
 }
 
 checkFor(numArray) {
+    ; function to check in value given for foreign references is valid.
     if (numArray["foreign"] < 0) {
         MsgBox % "Number of Foreign references cannot be negative.  Please only enter either 0 or positive numbers."
         return false
@@ -110,12 +113,12 @@ checkFor(numArray) {
     }
 }
 
-submitRef(num, maxFor, dict) {
+submitRef(num, maxFor, dict, browser) {
+    ; function to manipulate web broser to submit select and upload references.
     submitDelay := 100 ; 100 is default. Increase this number to slow down the submission process if it is breaking.  Do not set below 100 or errors may occur.
-    WinGet, browseExe, ProcessName, A
-    WinGetClass, browseClass, A
-    uploadWindow := dict[browseExe]["upload"]
-    normalWindow := dict[browseExe]["normal"]
+
+    uploadWindow := dict[browser]["upload"]
+    normalWindow := dict[browser]["normal"]
 
     foreign := (num <= maxFor)
 
@@ -145,6 +148,13 @@ main() {
         , "firefox.exe": {"upload": "File Upload", "normal": "MozillaWindowClass"}
         , "IEXPLORE.EXE": {"upload": "Choose File to Upload", "normal": "IEFrame"}} ; dict of supported browsers and the names of the window where the files to be uploaded are selected.
 
+    WinGet, browser, ProcessName, A
+
+    if (browser != "chrome.exe" and browser != "iexplore.exe") {
+        MsgBox % "Please make sure to your Chrome or Internet Explorer window is active before using hotkey."
+        Exit
+    }
+
     While (numsValid != true) {
         ; While loop to request and check First and Last numbers for validity
         Nums := getRefNums()
@@ -164,7 +174,7 @@ main() {
 
     While (refNum <= totalRefs) {
         ; While loop to iterate over and submit references
-        submitRef(refNum, forRefs, browseDict)
+        submitRef(refNum, forRefs, browseDict, browser)
         refNum += 1
         if (refNum <= totalRefs) {
             SendInput, {TAB 3}{SPACE}
