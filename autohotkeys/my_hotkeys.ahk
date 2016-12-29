@@ -32,7 +32,9 @@ Return
 ;Created by Patrick McNally 
 
 #z::
-;This is my new attempt at a master upload script to work on any browser.
+#i::
+#c::
+;This is my new attempt at a master upload script to work on any browser (It currently supports IE and Chrome).
 
 main()
 
