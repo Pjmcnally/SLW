@@ -40,6 +40,42 @@ Return
 
 Return
 
+; ------------------------------------------------------------------------------
+; ------------------------------------------------------------------------------
+; Hotstrings Below
+::wcomm::
+    worldoxSave("IDS Comm", "ids")
+return
+
+::wccca::
+    worldoxSave("IDS CCCA", "comm")
+return
+
+::wxmit::
+    worldoxSave("IDS Xmit", "xmit")
+return
+
+::w1449::
+    worldoxSave("IDS 1449", "ids")
+return
+
+worldoxSave(desc, doc_type) {
+    num := splitMatterNum(clipboard)
+    Send % num["raw"] desc
+    Send {tab}{tab}
+    Send % doc_type
+    Send {tab}
+    Send % num["client_num"]
+    Send {tab}
+    Send % num["family_num"]
+    Send {tab}
+    Send % num["c_code"]
+    Send {tab}
+    Send % num["cont_num"]
+    Send {tab}{tab}{tab}{enter}
+}
+
+; adapt to work with 3 digit client numbers
 splitMatterNum(str) {
     ; Matter numbers exist is a format of CCCC.FFFIIN or rarely CCCC.FFFINN
     ; where CCCC = client number, FFF = family number, I or II = country code
@@ -74,21 +110,3 @@ splitMatterNum(str) {
     num := {"raw": str, "client_num": client_num, "family_num": family_num, "c_code": c_code, "cont_num": cont_num}
     return num
 }
-
-
-; Hotstrings Below
-::wcomm::
-    num := splitMatterNum(clipboard)
-    Send % num["raw"]
-    Send IDS Comm
-    Send {tab}{tab}ids
-    Send {tab}
-    Send % num["client_num"]
-    Send {tab}
-    Send % num["family_num"]
-    Send {tab}
-    Send % num["c_code"]
-    Send {tab}
-    Send % num["cont_num"]
-    Send {tab}{tab}{tab}{enter}
-return
