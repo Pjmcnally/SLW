@@ -3,7 +3,7 @@
 
 ; script to log me into to various work sites (I know this is hilariously un-safe I just dont care).
 ^!l::
-  ; Wait for the key to be released.  Use one KeyWait for each of the hotkey's modifiers.
+  ; Wait for the key to be Loop,   , InputFile [, OutputFile]eleased.  Use one KeyWait for each of the hotkey's modifiers.
   KeyWait Control  
   KeyWait Alt
 
@@ -13,6 +13,8 @@
   ; Log into FIP (All browsers)
   if InStr(Title, "FoundationIP") {
     send pmcnally{tab}Pm{#}40110101{enter}
+  } else if InStr(Title, "USPTO User Authentication") {
+    send SLWads16{!}{tab}{space}{tab}{space}
   }
 
 Return
