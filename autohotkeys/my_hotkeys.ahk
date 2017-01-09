@@ -1,7 +1,7 @@
 ; Hotkey to reload script as I frequently save and edit it.
 ^!r::Reload  ; Assign Ctrl-Alt-R as a hotkey to restart the script.
 
-; script to log me into to various work sites (I know this is hilariously un-safe I just dont care).
+; script to log me into to various work sites.  Passwords stored in external file (Not in Git).
 ^!l::
     #Include passwords.ahk ; Passwords stored in file not tracked by Git
     ; Wait for the key to be released.  Use one KeyWait for each of the hotkey's modifiers.
