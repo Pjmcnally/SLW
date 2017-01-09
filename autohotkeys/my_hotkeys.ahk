@@ -3,28 +3,29 @@
 
 ; script to log me into to various work sites (I know this is hilariously un-safe I just dont care).
 ^!l::
-  ; Wait for the key to be Loop,   , InputFile [, OutputFile]eleased.  Use one KeyWait for each of the hotkey's modifiers.
-  KeyWait Control  
-  KeyWait Alt
+    ; Wait for the key to be released.  Use one KeyWait for each of the hotkey's modifiers.
+    KeyWait Control
+    KeyWait Alt
 
-  ; Get title of window.  To select the right password.
-  WinGetTitle, Title, A
+    ; Get title of window.  To select the right password.
+    WinGetTitle, Title, A
 
-  ; Log into FIP (All browsers)
-  if InStr(Title, "FoundationIP") {
-    send pmcnally{tab}Pm{#}40110101{enter}
-  } else if InStr(Title, "USPTO User Authentication") {
-    send SLWads16{!}{tab}{space}{tab}{space}
-  }
+    ; Log into FIP (All browsers)
+    if InStr(Title, "FoundationIP") {
+        send pmcnally{tab}Pm{#}40110101{enter}
+    } else if InStr(Title, "USPTO User Authentication") {
+        send SLWads16{!}{tab}{space}{tab}{space}
+    }
 
 Return
 
 ; Script to enter "United States of America
 ^!u::
-  ; Wait for the key to be released.  Use one KeyWait for each of the hotkey's modifiers.
-  KeyWait Control  
-  KeyWait Alt
-  send United States of America{tab}{enter}
+    ; Wait for the key to be released.  Use one KeyWait for each of the hotkey's modifiers.
+    KeyWait Control
+    KeyWait Alt
+    send United States of America{tab}{enter}
+
 Return
 
 
