@@ -20,6 +20,8 @@
         send %EFS%
     } else if InStr(Title, "Sign in | USPTO") {
         send %USPTO%
+    } else if InStr(Title, "PTFM") {
+        send %PTFM%
     }
 
 Return
