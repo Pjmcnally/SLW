@@ -3,7 +3,7 @@
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
-;##### Master.ahk
- Run, my_hotkeys.ahk, autohotkeys ; autohotkeys is the folder in the working directory
- Run, dockwin.ahk, autohotkeys
+Run, my_hotkeys.ahk, autohotkeys ; autohotkeys is the folder in the working directory
+Run, dockwin.ahk, autohotkeys
+
 ExitApp
