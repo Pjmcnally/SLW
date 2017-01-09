@@ -18,6 +18,8 @@
         send %FIP%
     } else if InStr(Title, "USPTO User Authentication") {
         send %EFS%
+    } else if InStr(Title, "Sign in | USPTO") {
+        send %USPTO%
     }
 
 Return
