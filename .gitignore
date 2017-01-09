@@ -5,3 +5,6 @@ bulk\ downloads/
 desktop.ini
 *.CRS
 *.LIB
+
+# passwords file
+passwords.ahk
