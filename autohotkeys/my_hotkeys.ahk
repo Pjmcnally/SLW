@@ -61,7 +61,7 @@ return
 
 worldoxSave(desc, doc_type) {
     num := splitMatterNum(clipboard)
-    Send % num["raw"] desc
+    Send % num["raw"] " " desc
     Send {tab}{tab}
     Send % doc_type
     Send {tab}
@@ -72,28 +72,30 @@ worldoxSave(desc, doc_type) {
     Send % num["c_code"]
     Send {tab}
     Send % num["cont_num"]
-    Send {tab}{tab}{tab}{enter}
+    ; Send {tab}{tab}{tab}{enter}
 }
 
-; adapt to work with 3 digit client numbers
 splitMatterNum(str) {
     ; Matter numbers exist is a format of CCCC.FFFIIN or rarely CCCC.FFFINN
     ; where CCCC = client number, FFF = family number, I or II = country code
     ; and N or NN = continuation number.
 
     ; test to ensure string has 11 digits cancel if not.
-    if (StrLen(str) != 11) {
+    len := StrLen(str)
+    if (len != 11 and len != 10) {
         MsgBox Invalid Matter Number
         Exit
     }
 
+    num_array := StrSplit(str, ".")
+
     ; extract client and family numbers
-    client_num := SubStr(str, 1, 4)
-    family_num := SubStr(str, 6, 3)
+    client_num := num_array[1]
+    family_num := SubStr(num_array[2], 1, 3)
 
     ; extract c_temp and check for char "U"
     ; for this purpose US should always be the right answer
-    c_temp := SubStr(str, 9, 2)
+    c_temp := SubStr(num_array[2], 4, 2)
     if InStr(c_temp, "U") {
         c_code := "US"
     } else {
@@ -103,9 +105,9 @@ splitMatterNum(str) {
 
     ; check if c_temp contains digits.  If no grab 1 digit.  If yes grab both
     if c_temp is alpha
-        cont_num := SubStr(str, 11, 1)
+        cont_num := SubStr(num_array[2], 6, 1)
     if c_temp is not alpha
-        cont_num := SubStr(str, 10, 2)
+        cont_num := SubStr(num_array[2], 5, 2)
 
     num := {"raw": str, "client_num": client_num, "family_num": family_num, "c_code": c_code, "cont_num": cont_num}
     return num
