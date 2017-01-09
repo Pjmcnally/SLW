@@ -76,8 +76,9 @@ worldoxSave(desc, doc_type) {
 }
 
 splitMatterNum(str) {
-    ; Matter numbers exist is a format of CCCC.FFFIIN or rarely CCCC.FFFINN
-    ; where CCCC = client number, FFF = family number, I or II = country code
+    ; Matter numbers exist is a format of CCCC.FFFIIN or CCC.FFFIIN
+    ; They infrequently appear as CCCC.FFFINN, CCC.FFFINN
+    ; where CCCC or CCC = client number, FFF = family number, I or II = country code
     ; and N or NN = continuation number.
 
     ; test to ensure string has 11 digits cancel if not.
@@ -87,15 +88,16 @@ splitMatterNum(str) {
         Exit
     }
 
+    ; break string into client number and remainder.
     num_array := StrSplit(str, ".")
-
-    ; extract client and family numbers
     client_num := num_array[1]
-    family_num := SubStr(num_array[2], 1, 3)
+
+    reminder = num_array[2]
+    family_num := SubStr(reminder, 1, 3)
 
     ; extract c_temp and check for char "U"
     ; for this purpose US should always be the right answer
-    c_temp := SubStr(num_array[2], 4, 2)
+    c_temp := SubStr(reminder, 4, 2)
     if InStr(c_temp, "U") {
         c_code := "US"
     } else {
@@ -105,9 +107,9 @@ splitMatterNum(str) {
 
     ; check if c_temp contains digits.  If no grab 1 digit.  If yes grab both
     if c_temp is alpha
-        cont_num := SubStr(num_array[2], 6, 1)
+        cont_num := SubStr(reminder, 6, 1)
     if c_temp is not alpha
-        cont_num := SubStr(num_array[2], 5, 2)
+        cont_num := SubStr(reminder, 5, 2)
 
     num := {"raw": str, "client_num": client_num, "family_num": family_num, "c_code": c_code, "cont_num": cont_num}
     return num
