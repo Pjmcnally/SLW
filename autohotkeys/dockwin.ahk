@@ -14,8 +14,8 @@ CrLf=`r`n
 FileName:="WinPos.txt"
 
 
-;Win-0 (Restore window positions from file)
-^!0::
+;Win-o (Restore window positions from file)
+^!o::
  
   ; Wait for the key to be released.  Use one KeyWait for each of the hotkey's modifiers.
   KeyWait Control  
@@ -92,7 +92,7 @@ RETURN
 
 
 ;Win-Shift-0 (Save current windows to file)
-^!+0::
+^!+o::
 
  MsgBox, 4,Dock Windows,Save window positions?
  IfMsgBox, NO, Return
