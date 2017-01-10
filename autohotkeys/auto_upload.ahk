@@ -140,15 +140,15 @@ main() {
 
     ; Variables used for filing
     totalRefs := Nums["last"] - Nums["first"] + 1 ; fixed off by one problem (if first = 1 and last = 20 there are 20 not 19)
-    forRefs := Nums["foreign"]
+    forRefMax := Nums["foreign"] + Nums["first"] -1 ; fixed off by one problem (fir first = 1 and numFor -= 20 the last foreign is 20 not 21)
     NPLRefs := totalRefs - Nums["foreign"]
     refNum := Nums["first"]
 
-    While (refNum <= totalRefs) {
+    While (refNum <= Nums["last"]) {
         ; While loop to iterate over and submit references
-        submitRef(refNum, forRefs, browseDict, browser)
+        submitRef(refNum, forRefMax, browseDict, browser)
         refNum += 1
-        if (refNum <= totalRefs) {
+        if (refNum <= Nums["last"]) {
             SendInput, {TAB 3}{SPACE}
             Sleep 100,
             sendInput, {SHIFTDOWN}{TAB 5}{SHIFTUP}{SPACE}
