@@ -1,7 +1,8 @@
 SendMode Input
 #Include auto_upload.ahk
 ; The line below this one is literal (the ; does not count as a comment indicator)
-#Hotstring EndChars -()[]{}:;'"/\,.?!`n `t
+; removed /\[]
+#Hotstring EndChars -(){}:;'",.?!`n `t
 
 ; Hotkey to reload script as I frequently save and edit it.
 ^!r::Reload  ; Assign Ctrl-Alt-R as a hotkey to restart the script.
@@ -106,6 +107,7 @@ splitMatterNum(str) {
 ; ------------------------------------------------------------------------------
 ; Hotstrings
 
+; Worldox save hotstrings
 :o:wcomm::
     worldoxSave("IDS Comm", "ids")
 return
@@ -122,6 +124,7 @@ return
     worldoxSave("IDS 1449", "ids")
 return
 
+
 ; Document types
 :o:aarf::Response to Final Office Action
 :o:aarn::Response to Non Final Office Action
@@ -136,6 +139,13 @@ return
 :o:iper::International Preliminary Examination Report
 :o:iprp::International Preliminary Report on Patentability
 :o:oarn::Non Final Office Action
+:o:pabr::Pre-Appeal Brief
+:o:pamd::Preliminary Amendment
+:o:prop::Preliminary Report on Patentability
+:o:pubap::Published Application
+:o:rerr::Restriction Requirement
+:o:rrr1mo::Response to Restriction Requirement
+
 
 ; misc text replace
 :o:asap::If possible, please sign ASAP.
@@ -148,16 +158,54 @@ return
 :o:e2::1.97(e)(2)
 :o:ifq::If there are any questions or there is anything more I can do to help please let me know.
 :o:ifs::If this is satisfactory please sign the attached documents and return them to me.  If not please let me know what changes you would like made.
+:o:pinfo::Patrick{Tab}McNally{Tab}Pmcnally@slwip.com{Tab}{Down}{Tab}{Tab}{Space}
+:o:w/ec::w/English Claims
+:o:w/et::w/English Translation
+:o:[on::[Online].  Retrieved from the Internet: <URL: ^v>
+:o:[onar::[Online].  [Archived YYYY-MM-DD].  Retrieved from the Internet: <URL: ^v>
+
 
 ; Prosecution documents hotstrings
 :o:m312::Application Serial No. ^v, Amendment after allowance under 37 CFR 1.312 mailed `
+:o:mr312::Application Serial No. ^v, Response filed  to Amendment after Final or under 37 CFR 1.312 mailed{left 54}
 :o:maarf::Application Serial No. ^v Response filed  to Final Office Action mailed{left 30}
 :o:maarn::Application Serial No. ^v Response filed  to Non Final Office Action mailed{left 34}
 :o:madar::Application Serial No. ^v Advisory Action mailed `
 :o:mapbr::Application Serial No. ^v Appeal Brief filed `
 :o:maprb::Application Serial No. ^v Reply Brief filed  to Examiner's Answer mailed{left 28}
-:o:meesr::European Application Serial No. ^v Extended European Search Report mailed `
+:o:mesr::European Application Serial No. ^v Extended European Search Report mailed `
+:o:mexan::Application Serial No. ^v, Examiner's Answer mailed `
+:o:mexin::Application Serial No. ^v, Examiner Interview Summary mailed `
+:o:mfoar::Application Serial No. ^v, Final Office Action mailed `
+:o:miper::International Application Serial No. ^v, International Preliminary Examination Report mailed `
+:o:miprp::International Application Serial No. ^v, International Preliminary Report on Patentability mailed `
+:o:misr::International Application Serial No. ^v, International Search Report mailed `
+:o:misrwo::International Application Serial No. ^v, International Search Report and Written Opinion mailed `
+:o:mnoar::Application Serial No. ^v, Notice of Allowance mailed `
+:o:moarn::Application Serial No. ^v, Non Final Office Action mailed `
+:o:mpabr::Application Serial No. ^v, Pre-Appeal Brief filed `
+:o:mpamd::Application Serial No. ^v, Preliminary Amendment mailed `
+:o:mprop::International Application Serial No. ^v, Preliminary Report on Patentability mailed `
+:o:mrerr::Application Serial No. ^v, Restriction Requirement mailed `
+:o:mrr1mo::Application Serial No. ^v, Response filed  to Restriction Requirement mailed{left 34}
+:o:mwo::International Application Serial No. ^v, Written Opinion mailed `
 
+
+; Matter Management text replacements
+:o:mmdone::
+    FormatTime, now,, MM/dd/yyyy
+    send --All office actions, responses, and NOAs entered as references %now% --  PJM
+Return
+
+:o:mmno::
+    FormatTime, now,, MM/dd/yyyy
+    send --Matter reviewed, no file history found as of %now% -- PJM
+Return
+
+:o:mmnone::
+    FormatTime, now,, MM/dd/yyyy
+    send --Matter reviewed, no office actions, responses, or NOAs found as of %now% -- PJM
+Return
 
 
 ; Full email shortcuts
