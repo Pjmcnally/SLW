@@ -122,3 +122,30 @@ return
     worldoxSave("IDS 1449", "ids")
 return
 
+; Document types
+::aarf::Response to Final Office Action
+::aarn::Response to Non Final Office Action
+::adaf::Response to Advisory Action
+::adar::Advisory Action
+::apbr::Appeal Brief
+::aprb::Appellant's Reply Brief
+::eesr::Extended European Search Report
+
+
+; misc text replace
+::asap::If possible, please sign ASAP.
+::asap3mo::If possible, please sign ASAP.  This must be filed soon for us to avoid paying a filing fee.
+::asapaarn::If possible, please sign ASAP.  We recently filed a response to non-final office action and we could recieve an office action shortly.
+::asaprce::If possible, please sign ASAP.  We recently filed an RCE and could recieve an office action shortly.
+::asn::Application Serial No.
+::atty::attorney
+::e1::1.97(e)(1)
+::e2::1.97(e)(2)
+
+; emial shortcuts
+::eids::
+    send %clipboard% - Documents for your signature{Tab}{Enter}{Tab}I have prepared an IDS for %clipboard%.  I examined the specification, disclosure, and file.  I found no additional references.  I prepared the IDS to cite all currently unmarked references in FIP.  If this is satisfactory, please sign and return the attached document.  If not, please let me know what changes you would like made.^{Home}
+Return
+
+
+
