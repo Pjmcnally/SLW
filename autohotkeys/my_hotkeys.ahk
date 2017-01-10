@@ -106,53 +106,58 @@ splitMatterNum(str) {
 ; ------------------------------------------------------------------------------
 ; Hotstrings
 
-::wcomm::
+:o:wcomm::
     worldoxSave("IDS Comm", "ids")
 return
 
-::wccca::
+:o:wccca::
     worldoxSave("IDS CCCA", "comm")
 return
 
-::wxmit::
+:o:wxmit::
     worldoxSave("IDS Xmit", "xmit")
 return
 
-::w1449::
+:o:w1449::
     worldoxSave("IDS 1449", "ids")
 return
 
 ; Document types
-::aarf::Response to Final Office Action
-::aarn::Response to Non Final Office Action
-::adaf::Response to Advisory Action
-::adar::Advisory Action
-::apbr::Appeal Brief
-::aprb::Appellant's Reply Brief
-::eesr::Extended European Search Report
-::exan::Examiner's Answer
-::exin::Examiner Interview Summary
-::foar::Final Office Action
-::iper::International Preliminary Examination Report
-::iprp::International Preliminary Report on Patentability
-::oarn::Non Final Office Action
+:o:aarf::Response to Final Office Action
+:o:aarn::Response to Non Final Office Action
+:o:adaf::Response to Advisory Action
+:o:adar::Advisory Action
+:o:apbr::Appeal Brief
+:o:aprb::Appellant's Reply Brief
+:o:eesr::Extended European Search Report
+:o:exan::Examiner's Answer
+:o:exin::Examiner Interview Summary
+:o:foar::Final Office Action
+:o:iper::International Preliminary Examination Report
+:o:iprp::International Preliminary Report on Patentability
+:o:oarn::Non Final Office Action
 
 ; misc text replace
-::asap::If possible, please sign ASAP.
-::asap3mo::If possible, please sign ASAP.  This must be filed soon for us to avoid paying a filing fee.
-::asapaarn::If possible, please sign ASAP.  We recently filed a response to non-final office action and we could recieve an office action shortly.
-::asaprce::If possible, please sign ASAP.  We recently filed an RCE and could recieve an office action shortly.
-::asn::Application Serial No.
-::atty::attorney
-::e1::1.97(e)(1)
-::e2::1.97(e)(2)
-::ifq::If there are any questions or there is anything more I can do to help please let me know.
-::ifs::If this is satisfactory please sign the attached documents and return them to me.  If not please let me know what changes you would like made.
+:o:asap::If possible, please sign ASAP.
+:o:asap3mo::If possible, please sign ASAP.  This must be filed soon for us to avoid paying a filing fee.
+:o:asapaarn::If possible, please sign ASAP.  We recently filed a response to non-final office action and we could recieve an office action shortly.
+:o:asaprce::If possible, please sign ASAP.  We recently filed an RCE and could recieve an office action shortly.
+:o:asn::Application Serial No. `
+:o:atty::attorney
+:o:e1::1.97(e)(1)
+:o:e2::1.97(e)(2)
+:o:ifq::If there are any questions or there is anything more I can do to help please let me know.
+:o:ifs::If this is satisfactory please sign the attached documents and return them to me.  If not please let me know what changes you would like made.
 
 ; Prosecution documents hotstrings
-::m312::Application Serial No. ^v, Amendment after allowance under 37 CFR 1.312 mailed
+:o:m312::Application Serial No. ^v, Amendment after allowance under 37 CFR 1.312 mailed
 :o:maarf::Application Serial No. %c, Response filed  to Final Office Action mailed{left 30}
 :o:maarn::Application Serial No. %c, Response filed  to Non Final Office Action mailed{left 34}
+:o:madar::Application Serial No. %c, Advisory Action mailed
+:o:mapbr::Application Serial No. %c, Appeal Brief filed
+:o:maprb::Application Serial No. %c, Reply Brief filed  to Examiner's Answer mailed{left 28}
+:o:meesr::European Application Serial No. %c, Extended European Search Report mailed `
+
 
 
 ; Full email shortcuts
