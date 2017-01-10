@@ -1,11 +1,12 @@
-SendMode Input
 #Include auto_upload.ahk
 ; The line below this one is literal (the ; does not count as a comment indicator)
 ; removed /\[]
 #Hotstring EndChars -(){}:;'",.?!`n `t
 
+
 ; Hotkey to reload script as I frequently save and edit it.
 ^!r::Reload  ; Assign Ctrl-Alt-R as a hotkey to restart the script.
+
 
 ; script to log me into to various work sites.
 ; Passwords stored in external file (Not in Git).
@@ -21,47 +22,48 @@ SendMode Input
 
     ; Log into FIP (All browsers)
     if InStr(Title, "FoundationIP") {
-        send %FIP%
+        SendInput %FIP%
     } else if InStr(Title, "USPTO User Authentication") {
-        send %EFS%
+        Send %EFS% ; SendInput doesn't work here.  Not sure why (too fast maybe)
     } else if InStr(Title, "Sign in | USPTO") {
-        send %USPTO%
+        SendInput %USPTO%
     } else if InStr(Title, "PTFM") {
-        send %PTFM%
+        SendInput %PTFM%
     }
-
 Return
+
 
 ; Script to enter "United States of America
 ^!u::
     ; Wait for the key to be released.  Use one KeyWait for each of the hotkey's modifiers.
     KeyWait Control
     KeyWait Alt
-    send United States of America{tab}{enter}
-
+    SendInput United States of America{tab}{enter}
 Return
-
-worldoxSave(desc, doc_type) {
-    num := splitMatterNum(clipboard)
-    Send % num["raw"] " " desc
-    Send {tab}{tab}
-    Send % doc_type
-    Send {tab}
-    Send % num["client_num"]
-    Send {tab}
-    Send % num["family_num"]
-    Send {tab}
-    Send % num["c_code"]
-    Send {tab}
-    Send % num["cont_num"]
-    ; Send {tab}{tab}{tab}{enter}
-}
 
 
 ; ------------------------------------------------------------------------------
 ; ------------------------------------------------------------------------------
 ; Functions used in hotstrings
 
+; navigates through workdox save UI and fills in blanks
+worldoxSave(desc, doc_type) {
+    num := splitMatterNum(clipboard)
+    SendInput % num["raw"] " " desc
+    SendInput {tab}{tab}
+    SendInput % doc_type
+    SendInput {tab}
+    SendInput % num["client_num"]
+    SendInput {tab}
+    SendInput % num["family_num"]
+    SendInput {tab}
+    SendInput % num["c_code"]
+    SendInput {tab}
+    SendInput % num["cont_num"]
+    SendInput {tab}{tab}{tab}{enter}
+}
+
+; Splits matter number and returns parts.
 splitMatterNum(str) {
     ; Matter numbers exist is a format of CCCC.FFFIIN or CCC.FFFIIN
     ; They infrequently appear as CCCC.FFFINN, CCC.FFFINN
@@ -79,12 +81,12 @@ splitMatterNum(str) {
     num_array := StrSplit(str, ".")
     client_num := num_array[1]
 
-    reminder = num_array[2]
-    family_num := SubStr(reminder, 1, 3)
+    remainder := num_array[2]
+    family_num := SubStr(remainder, 1, 3)
 
     ; extract c_temp and check for char "U"
     ; for this purpose US should always be the right answer
-    c_temp := SubStr(reminder, 4, 2)
+    c_temp := SubStr(remainder, 4, 2)
     if InStr(c_temp, "U") {
         c_code := "US"
     } else {
@@ -94,9 +96,9 @@ splitMatterNum(str) {
 
     ; check if c_temp contains digits.  If no grab 1 digit.  If yes grab both
     if c_temp is alpha
-        cont_num := SubStr(reminder, 6, 1)
+        cont_num := SubStr(remainder, 6, 1)
     if c_temp is not alpha
-        cont_num := SubStr(reminder, 5, 2)
+        cont_num := SubStr(remainder, 5, 2)
 
     num := {"raw": str, "client_num": client_num, "family_num": family_num, "c_code": c_code, "cont_num": cont_num}
     return num
@@ -194,17 +196,17 @@ return
 ; Matter Management text replacements
 :o:mmdone::
     FormatTime, now,, MM/dd/yyyy
-    send --All office actions, responses, and NOAs entered as references %now% --  PJM
+    SendInput --All office actions, responses, and NOAs entered as references %now% --  PJM
 Return
 
 :o:mmno::
     FormatTime, now,, MM/dd/yyyy
-    send --Matter reviewed, no file history found as of %now% -- PJM
+    SendInput --Matter reviewed, no file history found as of %now% -- PJM
 Return
 
 :o:mmnone::
     FormatTime, now,, MM/dd/yyyy
-    send --Matter reviewed, no office actions, responses, or NOAs found as of %now% -- PJM
+    SendInput --Matter reviewed, no office actions, responses, or NOAs found as of %now% -- PJM
 Return
 
 
@@ -236,4 +238,3 @@ Return
 
 ; basic foreign reference SIDS email
 :o:esidsfor::^v - Documents for your signature{Tab}{Enter}{Tab}I have prepared a SIDS for ^v in response to a foreign office action received in a related matter. I prepared the SIDS to cite the received document and all currently unmarked references in FIP.  If this is satisfactory, please sign and return the attached document.  If not, please let me know what changes you would like made.^{Home}
-
