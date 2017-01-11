@@ -1,10 +1,10 @@
 // Main function to check a group of references in fip starting with a "#" seperated list.
 // use https://convert.town/column-to-comma-separated-list to generate list from excel column.
 function checkRefs(nums) {
-    var numArray = nums.split("#")
-    var tds = document.getElementsByTagName("td")
-    var checked = []
-    var unchecked = []
+    var numArray = nums.split("#");
+    var tds = document.getElementsByTagName("td");
+    var checked = [];
+    var unchecked = [];
     
     for (var i = 0; i < numArray.length; i++) {
         if (searchElems(numArray[i], tds)) {
@@ -22,7 +22,7 @@ function checkRefs(nums) {
 function searchElems(value, elems) {
     for (var i = 0; i < elems.length; i++) {
         if (elems[i].textContent.indexOf(value) != -1) {
-            elems[i].parentElement.firstChild.click();;
+            elems[i].parentElement.firstChild.click();
             return true;
         }
     }
@@ -54,7 +54,7 @@ function checkForeignPat() {
     for (var i=0; i < rows.length; i++) {
 		var parent = rows[i].parentNode.parentNode;
         if (parent.children[6].textContent != "US") {
-			parent.firstChild.click()
+			parent.firstChild.click();
 		}
 	}
 }
