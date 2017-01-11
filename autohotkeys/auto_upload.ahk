@@ -140,8 +140,10 @@ main() {
 
     ; Variables used for filing
     totalRefs := Nums["last"] - Nums["first"] + 1 ; fixed off by one problem (if first = 1 and last = 20 there are 20 not 19)
-    forRefMax := Nums["foreign"] + Nums["first"] -1 ; fixed off by one problem (fir first = 1 and numFor -= 20 the last foreign is 20 not 21)
+    forRefs := Nums["foreign"]
     NPLRefs := totalRefs - Nums["foreign"]
+
+    forRefMax := Nums["foreign"] + Nums["first"] -1 ; fixed off by one problem (fir first = 1 and numFor -= 20 the last foreign is 20 not 21)
     refNum := Nums["first"]
 
     While (refNum <= Nums["last"]) {
