@@ -56,8 +56,8 @@ function checkForeignPat() {
 		var parent = rows[i].parentNode.parentNode;
         if (parent.children[6].textContent != "US") {
 			parent.firstChild.click();
-                        count += 1
+                        count += 1;
 		}
 	}
-    return count
+    return count;
 }
