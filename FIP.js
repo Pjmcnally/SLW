@@ -50,11 +50,14 @@ function checkPubRow(num) {
 
 // function to check all foreign patent docs
 function checkForeignPat() {
+    var count = 0;
     var rows = document.querySelectorAll("input.patent_checkRow");
     for (var i=0; i < rows.length; i++) {
 		var parent = rows[i].parentNode.parentNode;
         if (parent.children[6].textContent != "US") {
 			parent.firstChild.click();
+                        count += 1
 		}
 	}
+    return count
 }
