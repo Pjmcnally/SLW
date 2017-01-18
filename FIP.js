@@ -61,3 +61,19 @@ function checkForeignPat() {
 	}
     return count;
 }
+
+// function to check all uncited US relatd matters
+function checkUSRelated() {
+    var count = 0;
+    var rows = document.querySelectorAll("input.check_family");
+    for (var i=0; i < rows.length; i++) {
+        var parent = rows[i].parentNode.parentNode;
+        if (parent.children[2].textContent.indexOf("US") > -1 && 
+            parent.children[10].textContent.indexOf("Yes") === -1
+        ) {
+            parent.firstChild.click();
+                        count += 1;
+        }
+    }
+    return count;
+}
