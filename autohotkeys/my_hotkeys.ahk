@@ -166,10 +166,14 @@ return
 :o:[on::[Online].  Retrieved from the Internet: <URL: ^v>
 :o:[onar::[Online].  [Archived YYYY-MM-DD].  Retrieved from the Internet: <URL: ^v>
 :o:td::
+    ; This hotkey has to be extra convoluted and use pasted becasue of the way FIP handles / vs - in dates.
     FormatTime, now,, MM-dd-yy
-    SendInput % now 
+    old_clipboard = %clipboard%
+    clipboard = %now%
+    sendInput ^v
+    sleep 100
+    clipboard = %old_clipboard%
 return
-
 
 ; Prosecution documents hotstrings
 :o:m312::Application Serial No. ^v, Amendment after allowance under 37 CFR 1.312 mailed `
