@@ -165,6 +165,10 @@ return
 :o:w/et::w/English Translation
 :o:[on::[Online].  Retrieved from the Internet: <URL: ^v>
 :o:[onar::[Online].  [Archived YYYY-MM-DD].  Retrieved from the Internet: <URL: ^v>
+:o:td::
+    FormatTime, now,, MM-dd-yyyy
+    SendInput % now 
+return
 
 
 ; Prosecution documents hotstrings
