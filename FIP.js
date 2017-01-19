@@ -8,7 +8,7 @@ function checkRefs(nums) {
     
     for (var i = 0; i < numArray.length; i++) {
         if (searchElems(numArray[i], tds)) {
-           checked.push(numArray[i]);
+            checked.push(numArray[i]);
         } else {
             unchecked.push(numArray[i]);
         }
@@ -34,7 +34,7 @@ function searchElems(value, elems) {
 function checkPatRow(num) {
     boxes = document.getElementsByClassName("patent_checkRow");
     for (var i = 0; i < num; i++) {
-    	boxes[i].click();
+        boxes[i].click();
     }
 }
 
@@ -43,7 +43,7 @@ function checkPatRow(num) {
 function checkPubRow(num) {
     boxes = document.getElementsByClassName("pub_checkRow");
     for (var i = 0; i < num; i++) {
-    	boxes[i].click();
+        boxes[i].click();
     }
 }
 
@@ -53,12 +53,12 @@ function checkForeignPat() {
     var count = 0;
     var rows = document.querySelectorAll("input.patent_checkRow");
     for (var i=0; i < rows.length; i++) {
-		var parent = rows[i].parentNode.parentNode;
+        var parent = rows[i].parentNode.parentNode;
         if (parent.children[6].textContent != "US") {
-			parent.firstChild.click();
-                        count += 1;
-		}
-	}
+            parent.firstChild.click();
+            count += 1;
+        }
+    }
     return count;
 }
 
@@ -72,7 +72,7 @@ function checkUSRelated() {
             parent.children[10].textContent.indexOf("Yes") === -1
         ) {
             parent.firstChild.click();
-                        count += 1;
+            count += 1;
         }
     }
     return count;
