@@ -98,7 +98,9 @@ submitRef(num, maxFor, dict, browser) {
 
     IfWinNotActive, %uploadWindow%, , WinActivate, %wuploadWindow%,
     WinWaitActive, %uploadWindow%,
-    SendInput, {SHIFTDOWN}{TAB}{TAB}{SHIFTUP}%num%{ENTER}
+    SendInput, %num%
+    sleep, %submitDelay%
+    SendInput, {ENTER}  ; was before %num% {SHIFTDOWN}{TAB}{TAB}{SHIFTUP}
     Sleep, %submitDelay%
 
     IfWinNotActive, ahk_class %normalWindow%, , WinActivate, ahk_class %normalWindow%,
