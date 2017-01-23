@@ -85,7 +85,7 @@ checkFor(numArray) {
     }
 }
 
-submitRef(num, maxFor, dict, browser) {
+submitRef(num, maxFor, dict, browser, submitDelay) {
     ; function to manipulate web broser to submit select and upload references.
 
     uploadWindow := dict[browser]["upload"]
