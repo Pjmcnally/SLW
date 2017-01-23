@@ -97,6 +97,7 @@ submitRef(num, maxFor, dict, browser, submitDelay) {
 
     IfWinNotActive, %uploadWindow%, , WinActivate, %wuploadWindow%,
     WinWaitActive, %uploadWindow%,
+    sleep, %submitDelay%  ; This line is option and may help on slower computers.
     SendInput, %num%      ; This line and the 2 below it used to be combined
     sleep, %submitDelay%  ; and said %num% {SHIFTDOWN}{TAB}{TAB}{SHIFTUP}
     SendInput, {ENTER}    ; I believe this new method is more reliable.
