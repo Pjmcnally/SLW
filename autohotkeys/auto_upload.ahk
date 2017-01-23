@@ -85,9 +85,8 @@ checkFor(numArray) {
     }
 }
 
-submitRef(num, maxFor, dict, browser) {
+submitRef(num, maxFor, dict, browser, submitDelay) {
     ; function to manipulate web broser to submit select and upload references.
-    submitDelay := 20 ; 100 is default. Increase this number to slow down the submission process if it is breaking.  Do not set below 100 or errors may occur.
 
     uploadWindow := dict[browser]["upload"]
     normalWindow := dict[browser]["normal"]
@@ -98,9 +97,9 @@ submitRef(num, maxFor, dict, browser) {
 
     IfWinNotActive, %uploadWindow%, , WinActivate, %wuploadWindow%,
     WinWaitActive, %uploadWindow%,
-    SendInput, %num%
-    sleep, %submitDelay%
-    SendInput, {ENTER}  ; was before %num% {SHIFTDOWN}{TAB}{TAB}{SHIFTUP}
+    SendInput, %num%      ; This line and the 2 below it used to be combined
+    sleep, %submitDelay%  ; and said %num% {SHIFTDOWN}{TAB}{TAB}{SHIFTUP}
+    SendInput, {ENTER}    ; I believe this new method is more reliable.
     Sleep, %submitDelay%
 
     IfWinNotActive, ahk_class %normalWindow%, , WinActivate, ahk_class %normalWindow%,
@@ -117,7 +116,8 @@ submitRef(num, maxFor, dict, browser) {
 main() {
     ; These are the hardcoded variables.  If anything changes this is where you will need to change stuff.
     SetFormat, float, 04 ; sets float format so that when numbers are coverted to float leading 0's will pad them to set digit count to match renaming scheme
-    MaxRefs := 1000 ; This is determined by the USPTO and is hard coded.
+    submitDelay := 100 ; 100 is default. Increase this number to slow down the submission process if it is breaking.  Do not set below 100 or errors may occur.
+    MaxRefs := 20 ; This is determined by the USPTO and is hard coded.
     browseDict := {"chrome.exe": {"upload": "Open", "normal": "Chrome_WidgetWin_1"}
         , "firefox.exe": {"upload": "File Upload", "normal": "MozillaWindowClass"}
         , "IEXPLORE.EXE": {"upload": "Choose File to Upload", "normal": "IEFrame"}} ; dict of supported browsers and the names of the window where the files to be uploaded are selected.
@@ -148,18 +148,18 @@ main() {
 
     While (refNum <= Nums["last"]) {
         ; While loop to iterate over and submit references
-        submitRef(refNum, forRefMax, browseDict, browser)
-        refNum += 1
-        if (refnum > Nums["last"]) {
+        submitRef(refNum, forRefMax, browseDict, browser, submitDelay)
+        
+        if (refnum >= Nums["last"]) {
             MsgBox % "AutoHotkey has attempted to select all references. There should be " forRefs " Foreign and " NPLRefs " NPL References.  There should be a total of " totalRefs " references.  If this is correct please click 'Upload and Validate'"
-        } else if (Mod(refNum - 1, 20) = 0) {
-            Continue
         } else {
             SendInput, {TAB 3}{SPACE}
-            Sleep 100,
+            Sleep %submitDelay%,
             sendInput, {SHIFTDOWN}{TAB 5}{SHIFTUP}{SPACE}
-            Sleep 100,
+            Sleep %submitDelay%,
         }
+
+        refNum += 1
     }
 }
 Return
