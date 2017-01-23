@@ -1,4 +1,4 @@
-#Include auto_upload.ahk
+#Include auto_upload_loop.ahk
 ; The line below this one is literal (the ; does not count as a comment indicator)
 ; removed /\[]
 #Hotstring EndChars -(){}:;'",.?!`n `t

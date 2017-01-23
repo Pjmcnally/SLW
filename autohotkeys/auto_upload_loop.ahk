@@ -87,7 +87,7 @@ checkFor(numArray) {
 
 submitRef(num, maxFor, dict, browser) {
     ; function to manipulate web broser to submit select and upload references.
-    submitDelay := 20 ; 100 is default. Increase this number to slow down the submission process if it is breaking.  Do not set below 100 or errors may occur.
+    submitDelay := 100 ; 100 is default. Increase this number to slow down the submission process if it is breaking.  Do not set below 100 or errors may occur.
 
     uploadWindow := dict[browser]["upload"]
     normalWindow := dict[browser]["normal"]
