@@ -155,7 +155,7 @@ main() {
         
         if (refnum >= Nums["last"]) {
             MsgBox % "AutoHotkey has attempted to select all references. There should be " forRefs " Foreign and " NPLRefs " NPL References.  There should be a total of " totalRefs " references.  If this is correct please click 'Upload and Validate'"
-        } else if (Mod(refNum - 1, 20) = 0 and refNum != 1) {
+        } else if (Mod(refNum, 20) = 0) {
             ; Do nothing but skip code below.
         } else {
             SendInput, {TAB 3}{SPACE}

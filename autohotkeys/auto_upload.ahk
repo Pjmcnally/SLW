@@ -155,8 +155,8 @@ main() {
         
         if (refnum >= Nums["last"]) {
             MsgBox % "AutoHotkey has attempted to select all references. There should be " forRefs " Foreign and " NPLRefs " NPL References.  There should be a total of " totalRefs " references.  If this is correct please click 'Upload and Validate'"
-        ; } else if (Mod(refNum - 1, 20) = 0 and refNum != 1) {  ; These two lines are used in the looping variant
-        ;    ; Do nothing but skip code below.                   ; If you want to use the loop variant use that file.
+        ; } else if (Mod(refNum - 1, 20) = 0) {  ; These two lines are used in the looping variant
+        ;    ; Do nothing but skip code below.   ; If you want to use the loop variant use that file.
         } else {
             SendInput, {TAB 3}{SPACE}
             Sleep %submitDelay%,
