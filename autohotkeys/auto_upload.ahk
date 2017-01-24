@@ -1,6 +1,6 @@
 ;Scripts below mass upload documents to USPTO
-;Version 1.2
-;last updated 12-22-14
+;Version 2.0
+;last updated 01-24-17
 ;Created by Patrick McNally 
 
 #z::
