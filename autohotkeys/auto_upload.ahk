@@ -97,10 +97,12 @@ submitRef(num, maxFor, dict, browser, submitDelay) {
 
     IfWinNotActive, %uploadWindow%, , WinActivate, %wuploadWindow%,
     WinWaitActive, %uploadWindow%,
-    sleep, %submitDelay%  ; This line is option and may help on slower computers.
-    SendInput, %num%      ; This line and the 2 below it used to be combined
-    sleep, %submitDelay%  ; and said %num% {SHIFTDOWN}{TAB}{TAB}{SHIFTUP}
-    SendInput, {ENTER}    ; I believe this new method is more reliable.
+    Sleep, %submitDelay%  ; This line is optional and may help on slower computers.
+    SendInput, {SHIFTDOWN}{TAB}{TAB}{SHIFTUP}  ; if "Use inline AutoComplete in File Explorer and Run Dialog" option is enabled in internet options this line is not required.
+    Sleep, %submitDelay%  ; This line is optional and may help on slower computers.
+    SendInput, %num%
+    sleep, %submitDelay%
+    SendInput, {ENTER}
     Sleep, %submitDelay%
 
     IfWinNotActive, ahk_class %normalWindow%, , WinActivate, ahk_class %normalWindow%,
@@ -153,8 +155,8 @@ main() {
         
         if (refnum >= Nums["last"]) {
             MsgBox % "AutoHotkey has attempted to select all references. There should be " forRefs " Foreign and " NPLRefs " NPL References.  There should be a total of " totalRefs " references.  If this is correct please click 'Upload and Validate'"
-        ; } else if (Mod(refNum - 1, 20) = 0) {
-        ;    Continue
+        ; } else if (Mod(refNum - 1, 20) = 0 and refNum != 1) {  ; These two lines are used in the looping variant
+        ;    ; Do nothing but skip code below.                   ; If you want to use the loop variant use that file.
         } else {
             SendInput, {TAB 3}{SPACE}
             Sleep %submitDelay%,
