@@ -48,7 +48,7 @@ function checkPubRow(num) {
 }
 
 
-// function to check all foreign patent docs
+// function to check all foreign patent docs It n the references screen
 function checkForeignPat() {
     var count = 0;
     var rows = document.querySelectorAll("input.patent_checkRow");
@@ -62,7 +62,7 @@ function checkForeignPat() {
     return count;
 }
 
-// function to check all uncited US relatd matters
+// function to check all uncited US relatd matters on the related matters screen
 function checkUSRelated() {
     var count = 0;
     var rows = document.querySelectorAll("input.check_family");
