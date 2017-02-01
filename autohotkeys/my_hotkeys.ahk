@@ -161,6 +161,7 @@ return
 :o:ifq::If there are any questions or there is anything more I can do to help please let me know.
 :o:ifs::If this is satisfactory please sign the attached documents and return them to me.  If not please let me know what changes you would like made.
 :o:pinfo::Patrick{Tab}McNally{Tab}Pmcnally@slwip.com{Tab}{Down}{Tab}{Tab}{Space}
+:o:pnum::^v{Tab}A1{Tab}United States of America{Tab}{Enter}
 :o:w/ec::w/English Claims
 :o:w/et::w/English Translation
 :o:[on::[Online].  Retrieved from the Internet: <URL: ^v>
