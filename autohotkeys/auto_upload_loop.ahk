@@ -1,6 +1,6 @@
 ;Scripts below mass upload documents to USPTO
-;Version 1.2
-;last updated 12-22-14
+;Version 2.0 (loop)
+;last updated 01-24-17
 ;Created by Patrick McNally 
 
 #z::
@@ -97,9 +97,12 @@ submitRef(num, maxFor, dict, browser, submitDelay) {
 
     IfWinNotActive, %uploadWindow%, , WinActivate, %wuploadWindow%,
     WinWaitActive, %uploadWindow%,
+    ; Sleep, %submitDelay%  ; This line is optional and may help on slower computers.
+    ; SendInput, {SHIFTDOWN}{TAB}{TAB}{SHIFTUP}  ; if "Use inline AutoComplete in File Explorer and Run Dialog" option is enabled in internet options this line is not required.
+    ; Sleep, %submitDelay%  ; This line is optional and may help on slower computers.
     SendInput, %num%
     sleep, %submitDelay%
-    SendInput, {ENTER}  ; was before %num% {SHIFTDOWN}{TAB}{TAB}{SHIFTUP}
+    SendInput, {ENTER}
     Sleep, %submitDelay%
 
     IfWinNotActive, ahk_class %normalWindow%, , WinActivate, ahk_class %normalWindow%,
@@ -152,8 +155,8 @@ main() {
         
         if (refnum >= Nums["last"]) {
             MsgBox % "AutoHotkey has attempted to select all references. There should be " forRefs " Foreign and " NPLRefs " NPL References.  There should be a total of " totalRefs " references.  If this is correct please click 'Upload and Validate'"
-        } else if (Mod(refNum - 1, 20) = 0) {
-            Continue
+        } else if (Mod(refNum, 20) = 0) {
+            ; Do nothing but skip code below.
         } else {
             SendInput, {TAB 3}{SPACE}
             Sleep %submitDelay%,
