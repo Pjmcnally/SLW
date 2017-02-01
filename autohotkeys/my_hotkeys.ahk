@@ -38,7 +38,7 @@ Return
     ; Wait for the key to be released.  Use one KeyWait for each of the hotkey's modifiers.
     KeyWait Control
     KeyWait Alt
-    SendInput United States of America{tab}{enter}
+    SendInput United States of America{Tab}{Enter}
 Return
 
 
@@ -50,17 +50,17 @@ Return
 worldoxSave(desc, doc_type) {
     num := splitMatterNum(clipboard)
     SendInput % num["raw"] " " desc
-    SendInput {tab}{tab}
+    SendInput {Tab}{Tab}
     SendInput % doc_type
-    SendInput {tab}
+    SendInput {Tab}
     SendInput % num["client_num"]
-    SendInput {tab}
+    SendInput {Tab}
     SendInput % num["family_num"]
-    SendInput {tab}
+    SendInput {Tab}
     SendInput % num["c_code"]
-    SendInput {tab}
+    SendInput {Tab}
     SendInput % num["cont_num"]
-    SendInput {tab}{tab}{tab}{enter}
+    SendInput {Tab}{Tab}{Tab}{Enter}
 }
 
 ; Splits matter number and returns parts.
@@ -177,12 +177,12 @@ return
 
 ; Prosecution documents hotstrings
 :o:m312::Application Serial No. ^v, Amendment after allowance under 37 CFR 1.312 mailed `
-:o:mr312::Application Serial No. ^v, Response filed  to Amendment after Final or under 37 CFR 1.312 mailed{left 54}
-:o:maarf::Application Serial No. ^v Response filed  to Final Office Action mailed{left 30}
-:o:maarn::Application Serial No. ^v Response filed  to Non Final Office Action mailed{left 34}
+:o:mr312::Application Serial No. ^v, Response filed  to Amendment after Final or under 37 CFR 1.312 mailed{Left 54}
+:o:maarf::Application Serial No. ^v Response filed  to Final Office Action mailed{Left 30}
+:o:maarn::Application Serial No. ^v Response filed  to Non Final Office Action mailed{Left 34}
 :o:madar::Application Serial No. ^v Advisory Action mailed `
 :o:mapbr::Application Serial No. ^v Appeal Brief filed `
-:o:maprb::Application Serial No. ^v Reply Brief filed  to Examiner's Answer mailed{left 28}
+:o:maprb::Application Serial No. ^v Reply Brief filed  to Examiner's Answer mailed{Left 28}
 :o:mesr::European Application Serial No. ^v Extended European Search Report mailed `
 :o:mexan::Application Serial No. ^v, Examiner's Answer mailed `
 :o:mexin::Application Serial No. ^v, Examiner Interview Summary mailed `
@@ -197,7 +197,7 @@ return
 :o:mpamd::Application Serial No. ^v, Preliminary Amendment mailed `
 :o:mprop::International Application Serial No. ^v, Preliminary Report on Patentability mailed `
 :o:mrerr::Application Serial No. ^v, Restriction Requirement mailed `
-:o:mrr1mo::Application Serial No. ^v, Response filed  to Restriction Requirement mailed{left 34}
+:o:mrr1mo::Application Serial No. ^v, Response filed  to Restriction Requirement mailed{Left 34}
 :o:mwo::International Application Serial No. ^v, Written Opinion mailed `
 
 
