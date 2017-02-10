@@ -80,13 +80,15 @@ function checkUSRelated() {
 
 
 function getUniqueRelated() {
-    var results = new Set();
+    var res_set = new Set();
     var rows = document.querySelectorAll("input.check_family");
     for (var i=0; i < rows.length; i++) {
         var parent = rows[i].parentNode.parentNode;
         var matterNum = parent.children[2].textContent;
         var family = matterNum.split(".")[1].substr(0, 3)
-        results.add(family)
+        res_set.add(family)
     }
+    results = Array.from(res_set)
+    results.sort()
     return results;
 }
