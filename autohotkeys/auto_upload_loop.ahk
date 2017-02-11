@@ -1,5 +1,5 @@
 ;Scripts below mass upload documents to USPTO
-;Version 2.0
+;Version 2.0 (loop)
 ;last updated 01-24-17
 ;Created by Patrick McNally 
 
@@ -97,9 +97,9 @@ submitRef(num, maxFor, dict, browser, submitDelay) {
 
     IfWinNotActive, %uploadWindow%, , WinActivate, %wuploadWindow%,
     WinWaitActive, %uploadWindow%,
-    Sleep, %submitDelay%  ; This line is optional and may help on slower computers.
-    SendInput, {SHIFTDOWN}{TAB}{TAB}{SHIFTUP}  ; if "Use inline AutoComplete in File Explorer and Run Dialog" option is enabled in internet options this line is not required.
-    Sleep, %submitDelay%  ; This line is optional and may help on slower computers.
+    ; Sleep, %submitDelay%  ; This line is optional and may help on slower computers.
+    ; SendInput, {SHIFTDOWN}{TAB}{TAB}{SHIFTUP}  ; if "Use inline AutoComplete in File Explorer and Run Dialog" option is enabled in internet options this line is not required.
+    ; Sleep, %submitDelay%  ; This line is optional and may help on slower computers.
     SendInput, %num%
     sleep, %submitDelay%
     SendInput, {ENTER}
@@ -120,7 +120,7 @@ main() {
     ; These are the hardcoded variables.  If anything changes this is where you will need to change stuff.
     SetFormat, float, 04 ; sets float format so that when numbers are coverted to float leading 0's will pad them to set digit count to match renaming scheme
     submitDelay := 100 ; 100 is default. Increase this number to slow down the submission process if it is breaking.  Do not set below 100 or errors may occur.
-    MaxRefs := 20 ; This is determined by the USPTO and is hard coded.
+    MaxRefs := 1000 ; This is determined by the USPTO and is hard coded.
     browseDict := {"chrome.exe": {"upload": "Open", "normal": "Chrome_WidgetWin_1"}
         , "firefox.exe": {"upload": "File Upload", "normal": "MozillaWindowClass"}
         , "IEXPLORE.EXE": {"upload": "Choose File to Upload", "normal": "IEFrame"}} ; dict of supported browsers and the names of the window where the files to be uploaded are selected.
@@ -145,10 +145,8 @@ main() {
 
     ; Variables used for filing
     totalRefs := Nums["last"] - Nums["first"] + 1 ; fixed off by one problem (if first = 1 and last = 20 there are 20 not 19)
-    forRefs := Nums["foreign"]
-    NPLRefs := totalRefs - Nums["foreign"]
-
     forRefMax := Nums["foreign"] + Nums["first"] -1 ; fixed off by one problem (fir first = 1 and numFor -= 20 the last foreign is 20 not 21)
+    NPLRefs := totalRefs - Nums["foreign"]
     refNum := Nums["first"]
 
     While (refNum <= Nums["last"]) {
@@ -157,8 +155,8 @@ main() {
         
         if (refnum >= Nums["last"]) {
             MsgBox % "AutoHotkey has attempted to select all references. There should be " forRefs " Foreign and " NPLRefs " NPL References.  There should be a total of " totalRefs " references.  If this is correct please click 'Upload and Validate'"
-        ; } else if (Mod(refNum - 1, 20) = 0) {  ; These two lines are used in the looping variant
-        ;    ; Do nothing but skip code below.   ; If you want to use the loop variant use that file.
+        } else if (Mod(refNum, 20) = 0) {
+            ; Do nothing but skip code below.
         } else {
             SendInput, {TAB 3}{SPACE}
             Sleep %submitDelay%,

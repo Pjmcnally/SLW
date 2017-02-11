@@ -8,7 +8,7 @@ function checkRefs(nums) {
     
     for (var i = 0; i < numArray.length; i++) {
         if (searchElems(numArray[i], tds)) {
-           checked.push(numArray[i]);
+            checked.push(numArray[i]);
         } else {
             unchecked.push(numArray[i]);
         }
@@ -34,7 +34,7 @@ function searchElems(value, elems) {
 function checkPatRow(num) {
     boxes = document.getElementsByClassName("patent_checkRow");
     for (var i = 0; i < num; i++) {
-    	boxes[i].click();
+        boxes[i].click();
     }
 }
 
@@ -43,18 +43,52 @@ function checkPatRow(num) {
 function checkPubRow(num) {
     boxes = document.getElementsByClassName("pub_checkRow");
     for (var i = 0; i < num; i++) {
-    	boxes[i].click();
+        boxes[i].click();
     }
 }
 
 
-// function to check all foreign patent docs
+// function to check all foreign patent docs It n the references screen
 function checkForeignPat() {
+    var count = 0;
     var rows = document.querySelectorAll("input.patent_checkRow");
     for (var i=0; i < rows.length; i++) {
-		var parent = rows[i].parentNode.parentNode;
+        var parent = rows[i].parentNode.parentNode;
         if (parent.children[6].textContent != "US") {
-			parent.firstChild.click();
-		}
-	}
+            parent.firstChild.click();
+            count += 1;
+        }
+    }
+    return count;
+}
+
+// function to check all uncited US relatd matters on the related matters screen
+function checkUSRelated() {
+    var count = 0;
+    var rows = document.querySelectorAll("input.check_family");
+    for (var i=0; i < rows.length; i++) {
+        var parent = rows[i].parentNode.parentNode;
+        if (parent.children[2].textContent.indexOf("US") > -1 && 
+            parent.children[10].textContent.indexOf("Yes") === -1
+        ) {
+            parent.firstChild.click();
+            count += 1;
+        }
+    }
+    return count;
+}
+
+
+function getUniqueRelated() {
+    var res_set = new Set();
+    var rows = document.querySelectorAll("input.check_family");
+    for (var i=0; i < rows.length; i++) {
+        var parent = rows[i].parentNode.parentNode;
+        var matterNum = parent.children[2].textContent;
+        var family = matterNum.split(".")[1].substr(0, 3)
+        res_set.add(family)
+    }
+    results = Array.from(res_set)
+    results.sort()
+    return results;
 }
