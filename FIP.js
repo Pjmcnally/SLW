@@ -48,7 +48,7 @@ function checkPubRow(num) {
 }
 
 
-// function to check all foreign patent docs It n the references screen
+// function to check all foreign patent docs in the references screen
 function checkForeignPat() {
     var count = 0;
     var rows = document.querySelectorAll("input.patent_checkRow");
@@ -85,10 +85,10 @@ function getUniqueRelated() {
     for (var i=0; i < rows.length; i++) {
         var parent = rows[i].parentNode.parentNode;
         var matterNum = parent.children[2].textContent;
-        var family = matterNum.split(".")[1].substr(0, 3)
-        res_set.add(family)
+        var family = matterNum.split(".")[1].substr(0, 3);
+        res_set.add(family);
     }
-    results = Array.from(res_set)
-    results.sort()
+    results = Array.from(res_set);
+    results.sort();
     return results;
 }
