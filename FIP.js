@@ -30,7 +30,7 @@ function searchElems(value, elems) {
 }
 
 
-// function to check an arbitrary number of patent references in fip (starts from the top).
+// function to select an arbitrary number of patent references in fip (starts from the top).
 function checkPatRow(num) {
     boxes = document.getElementsByClassName("patent_checkRow");
     for (var i = 0; i < num; i++) {
@@ -39,7 +39,7 @@ function checkPatRow(num) {
 }
 
 
-// function to check an arbitrary number of npl references in fip (starts from the top).
+// function to select an arbitrary number of npl references in fip (starts from the top).
 function checkPubRow(num) {
     boxes = document.getElementsByClassName("pub_checkRow");
     for (var i = 0; i < num; i++) {
@@ -48,7 +48,7 @@ function checkPubRow(num) {
 }
 
 
-// function to check all foreign patent docs in the references screen
+// function to select (and return a count of) all foreign patent docs in the references screen
 function checkForeignPat() {
     var count = 0;
     var rows = document.querySelectorAll("input.patent_checkRow");
@@ -62,7 +62,7 @@ function checkForeignPat() {
     return count;
 }
 
-// function to check all uncited US relatd matters on the related matters screen
+// function to select (and return a count of) all uncited US relatd matters on the related matters screen
 function checkUSRelated() {
     var count = 0;
     var rows = document.querySelectorAll("input.check_family");
@@ -79,6 +79,7 @@ function checkUSRelated() {
 }
 
 
+// Function return a sorted list of all related matter families.
 function getUniqueRelated() {
     var res_set = new Set();
     var rows = document.querySelectorAll("input.check_family");
