@@ -121,3 +121,27 @@ function selectTempMarked() {
     }
     return count;
 }
+
+// Function to return list of any reference missing an attachment.
+function checkAttach() {
+    var results = []
+
+    // Select all matching lines in the patent section
+    var patent_rows = document.querySelectorAll("input.patent_checkRow");
+    for (var i=0; i < patent_rows.length; i++) {
+        var parent = patent_rows[i].parentNode.parentNode;
+        if (parent.children[2].childElementCount < 2) {
+            results.push(parent.children[1].firstChild.firstChild.textContent);
+        }
+    }
+
+    // Select all matching lines in the NPL section 
+    var pub_rows = document.querySelectorAll("input.pub_checkRow")
+    for (var j=0; j < pub_rows.length; j++) {
+        var parent = pub_rows[j].parentNode.parentNode;
+        if (parent.children[2].childElementCount < 2) {
+            results.push(parent.children[1].firstChild.firstChild.textContent);
+        }
+    }
+    return results
+}
