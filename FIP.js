@@ -95,3 +95,29 @@ function getUniqueRelated() {
     results.sort();
     return results;
 }
+
+// Function to check all references cited on an arbitray date (01-01-01)
+function selectTempMarked() {
+    var count = 0;
+
+    // Select all matching lines in the patent section
+    var patent_rows = document.querySelectorAll("input.patent_checkRow");
+    for (var i=0; i < patent_rows.length; i++) {
+        var parent = patent_rows[i].parentNode.parentNode;
+        if (parent.children[11].textContent === " Jan 1, 2001") {
+            parent.firstChild.click();
+            count += 1;
+        }
+    }
+
+    // Select all matching lines in the NPL section 
+    var pub_rows = document.querySelectorAll("input.pub_checkRow")
+    for (var j=0; j < pub_rows.length; j++) {
+        var parent = pub_rows[j].parentNode.parentNode;
+        if (parent.children[11].textContent === " Jan 1, 2001") {
+            parent.firstChild.click();
+            count += 1;
+        }
+    }
+    return count;
+}
