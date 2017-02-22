@@ -167,13 +167,17 @@ return
 :o:[on::[Online].  Retrieved from the Internet: <URL: ^v>
 :o:[onar::[Online].  [Archived YYYY-MM-DD].  Retrieved from the Internet: <URL: ^v>
 :o:td::
-    ; This hotkey has to be extra convoluted and use pasted becasue of the way FIP handles / vs - in dates.
     FormatTime, now,, MM-dd-yy
-    old_clipboard = %clipboard%
-    clipboard = %now%
-    sendInput ^v
-    sleep 100
-    clipboard = %old_clipboard%
+    sendInput % now
+return
+:o:td\::
+    FormatTime, now,, MM/dd/yyyy
+    SendInput % now
+return
+:o:tda::  ; To insert arbitrary date
+    FormatTime, date, 20170222, MM/dd/yyyy  ; Change date in this line to change arbitrary date
+    sendInput % date
+    send {Tab}internal{Tab}
 return
 
 ; Prosecution documents hotstrings
