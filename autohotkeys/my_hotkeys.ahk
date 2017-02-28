@@ -150,7 +150,7 @@ return
 
 
 ; misc text replace
-:o:asap::If possible, please sign ASAP.
+:o:asaps::If possible, please sign ASAP.
 :o:asap3mo::If possible, please sign ASAP.  This must be filed soon for us to avoid paying a filing fee.
 :o:asapaarn::If possible, please sign ASAP.  We recently filed a response to non-final office action and we could recieve an office action shortly.
 :o:asaprce::If possible, please sign ASAP.  We recently filed an RCE and could recieve an office action shortly.
