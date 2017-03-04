@@ -7,11 +7,58 @@
 ; I am very close to getting this to work in Firefox but for some reason the upload window behaves inconsistently.
 
 #z::
-#i::
-#c::
+main() ; Runs entire script 
+Return
 
-; Main function that runs everything
-main()
+main() {
+    ; These are the hard-coded variables.  If anything changes this is where you will need to change stuff.
+    submitDelay := 100 ; 100 is default. Increase this number to slow down the submission process if it is breaking.  Do not set below 100 or errors may occur.
+    user := "pmcnally" ; This is the name of the user directory in windows.  It is used for file paths.
+
+    ; Get name of open window
+    WinGet, window, ProcessName, A
+
+    ; Check if open window is a supported browser
+    verifyBrowser(window)
+
+    ; Setup and get info for specific browser.
+    browserInfo := setupBrowser(window)
+    uploadWindow := browserInfo["upload"]
+    normalWindow := browserInfo["normal"]
+
+    ; Get directory holding files to update.
+    directory := getDirectory(user)
+
+    ; Get number of foreign refs.
+    num_foreign := getForNum()
+
+    ; Loop through references to upload to FIP.
+    Loop, Files, %directory%
+        {
+            if (A_index >= 2 and Mod(A_index, 21) != 0) { ; Automatically open upload window except for 1st and every 20th (1 indexed)
+                openUploadWindow(submitDelay, browser)
+            }
+            submitRef(A_LoopFileFullPath, A_index, num_foreign, uploadWindow, normalWindow, submitDelay)
+        }
+    MsgBox % "AutoHotkey has attempted to select all references."
+}
+
+getDirectory(user) {
+    InputBox, directory, Directory, Please enter the directory containg the references.
+    checkCancel(ErrorLevel)
+
+    file_default := "\*.*"
+
+    if (directory) {
+        directory := directory file_default
+    } else {
+        directory := "C:\Users\" user "\Desktop\bulk flatten" file_default
+    }
+    return directory
+
+
+    ; directory := "C:\upload\*.*" ; Hard-coded.  All references should be put in this folder before beginning.
+}
 
 verifyBrowser(window) {
     ; Function to check if working browser window is open.
@@ -114,34 +161,3 @@ openUploadWindow(submitDelay, browser) {
         Send, {TAB 3}{SPACE}{SHIFTDOWN}{TAB 5}{SHIFTUP}{SPACE}
     }
 }
-
-main() {
-    ; These are the hard-coded variables.  If anything changes this is where you will need to change stuff.
-    directory := "C:\upload\*.*" ; Hard-coded.  All references should be put in this folder before beginning.
-    submitDelay := 100 ; 100 is default. Increase this number to slow down the submission process if it is breaking.  Do not set below 100 or errors may occur.
-
-    ; Get name of open window
-    WinGet, window, ProcessName, A
-
-    ; Check if open window is a supported browser
-    verifyBrowser(window)
-
-    ; Setup and get info for specific browser.
-    browserInfo := setupBrowser(window)
-    uploadWindow := browserInfo["upload"]
-    normalWindow := browserInfo["normal"]
-
-    ; Get number of foreign refs.
-    num_foreign := getForNum()
-
-    ; Loop through references to upload to FIP.
-    Loop, Files, %directory%
-        {
-            if (A_index >= 2 and Mod(A_index, 21) != 0) { ; Automatically open upload window except for 1st and every 20th (1 indexed)
-                openUploadWindow(submitDelay, browser)
-            }
-            submitRef(A_LoopFileFullPath, A_index, num_foreign, uploadWindow, normalWindow, submitDelay)
-        }
-    MsgBox % "AutoHotkey has attempted to select all references."
-}
-Return
