@@ -1,5 +1,9 @@
 This repo holds scripts and other automation tools I am using for work at SLW.
 
-Autohotkey scripts (espescially AutoUpload are a work in progress).
+My automation tools are divided into two parts.
 
-AutoUpload (at this point is 3 different scripts).  There is a legacy script, a current script and an experimental looping script.  The current script is the only one I wish to be deployed but several people are still using the legacy script.
+The first part is made up of AutoHotkey Scripts. In addition to basic text replacement, I use AutoHotkey to write full emails and expedite repetitive tasks. The largest script I have written is AutoUpload_loop. This script automatically uploads files into the USPTO reference submission page.
+
+AutoUpload, at this point, is 3 different scripts. There is are 2 legacy scripts and a more advance looping script. I would prefer everyone use the advanced script but some people are still using the legacy script.
+
+The second portion of my automation tools is the JavaScript I have written to more quickly and easily manipulate FIP.
