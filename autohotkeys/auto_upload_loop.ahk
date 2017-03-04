@@ -44,6 +44,7 @@ main() {
 }
 
 getDirectory(user) {
+    ; Asks user which directory they would like to upload from.  If no reponse uses default directory.
     InputBox, directory, Directory, Please enter the directory containg the references.
     checkCancel(ErrorLevel)
 
@@ -55,13 +56,10 @@ getDirectory(user) {
         directory := "C:\Users\" user "\Desktop\bulk flatten" file_default
     }
     return directory
-
-
-    ; directory := "C:\upload\*.*" ; Hard-coded.  All references should be put in this folder before beginning.
 }
 
 verifyBrowser(window) {
-    ; Function to check if working browser window is open.
+    ; Function to check if supported browser window is open.
     if (window = "chrome.exe" or window = "iexplore.exe") { ; or window = "firefox.exe"
     } else {
         MsgBox % "Please make sure to your Chrome or Internet Explorer window is active before using hotkey."
@@ -70,7 +68,7 @@ verifyBrowser(window) {
 }
 
 setupBrowser(browser) {
-    ; set input mode per browser
+    ; Set input mode per browser
     if (browswer = "firefox.exe") { ; Firefox works better (but not completely) with Send mode
         SetKeyDelay, 100
     } else {
