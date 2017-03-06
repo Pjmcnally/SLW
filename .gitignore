@@ -1,2 +1,6 @@
 # passwords file
 passwords.ahk
+
+# misc windows crap
+*.CRS
+*.LIB
