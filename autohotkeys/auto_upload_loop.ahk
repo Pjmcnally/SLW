@@ -6,6 +6,8 @@
 ; This is my new attempt at a master upload script to work on any browser (It currently supports IE and Chrome).
 ; I am very close to getting this to work in Firefox but for some reason the upload window behaves inconsistently.
 
+#i::
+#c::
 #z::
 main() ; Runs entire script 
 Return
