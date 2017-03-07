@@ -10,7 +10,6 @@
 
 ; script to log me into to various work sites.
 ; Passwords stored in external file (Not in Git).
-; Passwords changed to invalidate passwords uploaded to Git.
 ^!l::
     #Include passwords.ahk ; Passwords stored in file not tracked by Git
     ; Wait for the key to be released.  Use one KeyWait for each of the hotkey's modifiers.
@@ -20,15 +19,20 @@
     ; Get title of window.  To select the right password.
     WinGetTitle, Title, A
 
-    ; Log into FIP (All browsers)
+    ; Login to FIP (All browsers)
     if InStr(Title, "FoundationIP") {
         SendInput %FIP%
+    ; login to EFS
     } else if InStr(Title, "USPTO User Authentication") {
         Send %EFS% ; SendInput doesn't work here.  Not sure why (too fast maybe)
+    ; login to USPTO and USPTO payment
     } else if InStr(Title, "Sign in | USPTO") {
         SendInput %USPTO%
+    ; login to PTFM
     } else if InStr(Title, "PTFM") {
         SendInput %PTFM%
+    } else if InStr(Title, "USPTO Pay - Choose Checkout Method") {
+        SendInput %USPTOPAY%
     }
 Return
 
