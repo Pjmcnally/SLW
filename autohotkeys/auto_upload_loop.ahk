@@ -15,7 +15,6 @@ Return
 main() {
     ; These are the hard-coded variables.  If anything changes this is where you will need to change stuff.
     submitDelay := 100 ; 100 is default. Increase this number to slow down the submission process if it is breaking.  Do not set below 100 or errors may occur.
-    user := "pmcnally" ; This is the name of the user directory in windows.  It is used for file paths.
 
     ; Get name of open window
     WinGet, window, ProcessName, A
@@ -28,21 +27,49 @@ main() {
     uploadWindow := browserInfo["upload"]
     normalWindow := browserInfo["normal"]
 
-    ; Get directory holding files to update.
+    ; Get directory holding files and file count.
     directory := getDirectory(user)
+    num_files := countFiles(directory)
 
     ; Get number of foreign refs.
     num_foreign := getForNum()
 
+    ; Get count of files in directory and confirm with user
+    if (verifyContinue(num_files)) {
+        Sleep, %submitDelay%  ; Prevents occasional issue where window is not activated properly after clicking "ok"
+        submitLoop(directory, num_files, num_foreign, uploadWindow, normalWindow, submitDelay)
+        MsgBox, AutoHotkey has attempted to select all %num_files% files.
+    } else {
+        Exit
+    }
+}
+
+submitLoop(directory, num_files, num_foreign, uploadWindow, normalWindow, submitDelay) {
     ; Loop through references to upload to FIP.
     Loop, Files, %directory%
-        {
-            if (A_index >= 2 and Mod(A_index, 21) != 0) { ; Automatically open upload window except for 1st and every 20th (1 indexed)
-                openUploadWindow(submitDelay, browser)
-            }
-            submitRef(A_LoopFileFullPath, A_index, num_foreign, uploadWindow, normalWindow, submitDelay)
+    {
+        submitRef(A_LoopFileFullPath, A_index, num_foreign, uploadWindow, normalWindow, submitDelay)
+        if (A_Index = num_files or Mod(A_index, 20) = 0) {
+            continue
+        } else {
+            openUploadWindow(submitDelay, browser) ; Automatically open upload window except for every 20th
         }
-    MsgBox % "AutoHotkey has attempted to select all references."
+    }
+}
+
+countFiles(directory) {
+    num := 0
+    loop, Files, %directory%
+        num := A_Index
+    return num
+}
+
+verifyContinue(num_files) {
+    MsgBox, 1, Continue?, AutoHotkey has found %num_files% files to upload.  `r`rClick 'OK' to continue or 'Cancel' to quit.
+    ifMsgBox Ok
+        Return True
+    else
+        Return False
 }
 
 getDirectory(user) {
@@ -50,12 +77,12 @@ getDirectory(user) {
     InputBox, directory, Directory, Please enter the directory containg the references.
     checkCancel(ErrorLevel)
 
-    file_default := "\*.*"
+    file_default := "\*.pdf"  ; Limits to only uploading pdf files.
 
     if (directory) {
         directory := directory file_default
     } else {
-        directory := "C:\Users\" user "\Desktop\bulk flatten" file_default
+        directory := "C:\Users\" A_UserName "\Desktop\upload" file_default
     }
     return directory
 }
@@ -109,7 +136,7 @@ promptForNum() {
     return temp
 }
 
-isNotInt( str ) {
+isNotInt(str) {
     ; function to check if value is integer.
     if str is not integer
         return true
