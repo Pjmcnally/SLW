@@ -44,49 +44,6 @@ main() {
     }
 }
 
-submitLoop(directory, num_files, num_foreign, uploadWindow, normalWindow, submitDelay) {
-    ; Loop through references to upload to FIP.
-    Loop, Files, %directory%
-    {
-        submitRef(A_LoopFileFullPath, A_index, num_foreign, uploadWindow, normalWindow, submitDelay)
-        if (A_Index = num_files or Mod(A_index, 20) = 0) {
-            continue
-        } else {
-            openUploadWindow(submitDelay, browser) ; Automatically open upload window except for every 20th
-        }
-    }
-}
-
-countFiles(directory) {
-    num := 0
-    loop, Files, %directory%
-        num := A_Index
-    return num
-}
-
-verifyContinue(num_files) {
-    MsgBox, 1, Continue?, AutoHotkey has found %num_files% files to upload.  `r`rClick 'OK' to continue or 'Cancel' to quit.
-    ifMsgBox Ok
-        Return True
-    else
-        Return False
-}
-
-getDirectory(user) {
-    ; Asks user which directory they would like to upload from.  If no reponse uses default directory.
-    InputBox, directory, Directory, Please enter the directory containg the references.
-    checkCancel(ErrorLevel)
-
-    file_default := "\*.pdf"  ; Limits to only uploading pdf files.
-
-    if (directory) {
-        directory := directory file_default
-    } else {
-        directory := "C:\Users\" A_UserName "\Desktop\upload" file_default
-    }
-    return directory
-}
-
 verifyBrowser(window) {
     ; Function to check if supported browser window is open.
     if (window = "chrome.exe" or window = "iexplore.exe") { ; or window = "firefox.exe"
@@ -120,6 +77,36 @@ checkCancel(Val) {
     }
 }
 
+getDirectory(user) {
+    ; Asks user which directory they would like to upload from.  If no reponse uses default directory.
+    InputBox, directory, Directory, Please enter the directory containg the references.
+    checkCancel(ErrorLevel)
+
+    file_default := "\*.pdf"  ; Limits to only uploading pdf files.
+
+    if (directory) {
+        directory := directory file_default
+    } else {
+        directory := "C:\Users\" A_UserName "\Desktop\upload" file_default
+    }
+    return directory
+}
+
+countFiles(directory) {
+    num := 0
+    loop, Files, %directory%
+        num := A_Index
+    return num
+}
+
+verifyContinue(num_files) {
+    MsgBox, 1, Continue?, AutoHotkey has found %num_files% files to upload.  `r`rClick 'OK' to continue or 'Cancel' to quit.
+    ifMsgBox Ok
+        Return True
+    else
+        Return False
+}
+
 getForNum() {
     While (forValid != true) {
         ; While loop to request and check foreign ref number for validity
@@ -136,13 +123,6 @@ promptForNum() {
     return temp
 }
 
-isNotInt(str) {
-    ; function to check if value is integer.
-    if str is not integer
-        return true
-    return false
-}
-
 checkFor(num_for) {
     ; function to check in value given for foreign references is valid.
     if (num_for < 0) {
@@ -153,6 +133,26 @@ checkFor(num_for) {
         return false
     } else {
         return true
+    }
+}
+
+isNotInt(str) {
+    ; function to check if value is integer.
+    if str is not integer
+        return true
+    return false
+}
+
+submitLoop(directory, num_files, num_foreign, uploadWindow, normalWindow, submitDelay) {
+    ; Loop through references to upload to FIP.
+    Loop, Files, %directory%
+    {
+        submitRef(A_LoopFileFullPath, A_index, num_foreign, uploadWindow, normalWindow, submitDelay)
+        if (A_Index = num_files or Mod(A_index, 20) = 0) {
+            continue
+        } else {
+            openUploadWindow(submitDelay, browser) ; Automatically open upload window except for every 20th
+        }
     }
 }
 
