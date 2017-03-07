@@ -1,6 +1,22 @@
+// This JS file is not intended to be used as a JS file for a website.  Each
+// Function below is something I wrote to paste into the console of FIP.
+// Each function automates or expidites a frequently repeated tasks
+
 // Main function to check a group of references in fip starting with a "#" seperated list.
 // use https://convert.town/column-to-comma-separated-list to generate list from excel column.
 function checkRefs(nums) {
+    // function to take a given value and search an array of elems for value.
+    // Returns true (and also calls check function) if found.  Returns false otherwise.
+    function searchElems(value, elems) {
+        for (var i = 0; i < elems.length; i++) {
+            if (elems[i].textContent.indexOf(value) != -1) {
+                elems[i].parentElement.firstChild.click();
+                return true;
+            }
+        }
+        return false;
+    }
+
     var numArray = nums.split("#");
     var tds = document.getElementsByTagName("td");
     var checked = [];
@@ -15,19 +31,7 @@ function checkRefs(nums) {
     }
     return [checked, unchecked];
 }
-
-
-// function to take a given value and search an array of elems for value.
-// Returns true (and also calls check function) if found.  Returns false otherwise.
-function searchElems(value, elems) {
-    for (var i = 0; i < elems.length; i++) {
-        if (elems[i].textContent.indexOf(value) != -1) {
-            elems[i].parentElement.firstChild.click();
-            return true;
-        }
-    }
-    return false;
-}
+checkRefs(nums)
 
 
 // function to select an arbitrary number of patent references in fip (starts from the top).
@@ -37,6 +41,7 @@ function checkPatRow(num) {
         boxes[i].click();
     }
 }
+checkPatRow(num)
 
 
 // function to select an arbitrary number of npl references in fip (starts from the top).
@@ -46,6 +51,7 @@ function checkPubRow(num) {
         boxes[i].click();
     }
 }
+checkPubRow(num)
 
 
 // function to select (and return a count of) all foreign patent docs in the references screen
@@ -61,6 +67,8 @@ function checkForeignPat() {
     }
     return count;
 }
+checkForeignPat()
+
 
 // function to select (and return a count of) all uncited US relatd matters on the related matters screen
 function checkUSRelated() {
@@ -76,7 +84,8 @@ function checkUSRelated() {
         }
     }
     return count;
-}
+} 
+checkUSRelated()
 
 
 // Function return a sorted list of all related matter families.
@@ -95,6 +104,8 @@ function getUniqueRelated() {
     results.sort();
     return results;
 }
+getUniqueRelated()
+
 
 // Function to check all references cited on an arbitray date (01-01-01)
 function selectTempMarked() {
@@ -121,6 +132,8 @@ function selectTempMarked() {
     }
     return count;
 }
+selectTempMarked()
+
 
 // Function to return list of any reference missing an attachment.
 function checkAttach() {
@@ -145,3 +158,4 @@ function checkAttach() {
     }
     return results
 }
+checkAttach()
