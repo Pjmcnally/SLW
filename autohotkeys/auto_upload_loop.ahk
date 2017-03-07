@@ -1,6 +1,6 @@
 ; Scripts below mass upload documents to USPTO
-; Version 3.0 (loop)
-; last updated 03-03-17
+; Version 4.0 (loop)
+; last updated 03-07-17
 ; Created by Patrick McNally 
 
 ; This is my new attempt at a master upload script to work on any browser (It currently supports IE and Chrome).
