@@ -40,7 +40,9 @@ main() {
 }
 
 class UploadSession {
-    Static submitDelay := 100
+    ; These are the hard-coded variables.  If anything changes this is where you will need to change stuff.
+    Static submitDelay := 100 ; 100 is default. Increase this number to slow down the submission process if it is breaking.  Do not set below 100 or errors may occur.
+    Static file_default := "\*.pdf"  ; Limits to only uploading pdf files. If this is changed make sure leading \ is included.
 
     getWindow() {
         WinGet, window, ProcessName, A
@@ -59,7 +61,7 @@ class UploadSession {
     setupBrowser() {
         ; Set input mode per browser
         if (browswer = "firefox.exe") { ; Firefox works better (but not completely) with Send mode
-            SetKeyDelay, 100
+            SetKeyDelay, % UploadSession.submitDelay
         } else {
             SendMode, Input ; SendInput is better and Chrome and IE both work with it.
         }
@@ -80,14 +82,12 @@ class UploadSession {
         ; Asks user which directory they would like to upload from. If no reponse uses default directory.
         InputBox, directory, Directory, Please enter the directory containg the references.
         if ErrorLevel
-            Exit
-
-        file_default := "\*.pdf"  ; Limits to only uploading pdf files.
+            Exit    
 
         if (directory) {
-            directory := directory file_default
+            directory := directory UploadSession.file_default
         } else {
-            directory := "C:\Users\" A_UserName "\Desktop\upload" file_default
+            directory := "C:\Users\" A_UserName "\Desktop\upload" UploadSession.file_default
         }
         This.directory := directory
     }
@@ -150,7 +150,7 @@ class UploadSession {
                 This.openUploadWindow() ; Automatically open upload window except for every 20th
             }
         }
-        MsgBox, % "AutoHotkey has attempted to select all " . This.file_count . "files."
+        MsgBox, % "AutoHotkey has attempted to select all " . This.file_count . " files."
     }
 
     submitRef(file) {
