@@ -179,7 +179,7 @@ return
     SendInput % now
 return
 :o:tda::  ; To insert arbitrary date
-    FormatTime, date, 20170222, MM/dd/yyyy  ; Change date in this line to change arbitrary date
+    FormatTime, date, 20170228, MM/dd/yyyy  ; Change date in this line to change arbitrary date
     sendInput % date
     send {Tab}internal{Tab}
 return
