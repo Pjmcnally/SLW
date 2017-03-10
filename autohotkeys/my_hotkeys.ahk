@@ -1,4 +1,5 @@
 #Include auto_upload_loop.ahk
+#Include playground.ahk
 ; The line below this one is literal (the ; does not count as a comment indicator)
 ; removed /\[]
 #Hotstring EndChars -(){}:;'",.?!`n `t
