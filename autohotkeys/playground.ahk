@@ -2,22 +2,28 @@
 
 ^!t::
 ; testing 
+file := FileOpen("test.txt", "w")
+array := [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
-array := [1, 2, 3, 4, 5]
-shuffle(array)
-msgbox % "[" . array[1] . ", " array[2] . ", " array[3] . ", " array[4] . ", " array[5] . "]"
+i := 0, num := 100000
+while (i < num) {
+    shuffle(array)
+    file.Write(arrayAsStr(array))
+    i += 1
+}
+file.Close()
+return
 
 
-testRandDict(num) {
-    dict := {1: 0, 2: 0, 3: 0, 4: 0, 5: 0}
-    i = 0
-    while (i < num) {
-        Random, rand, 0.0, 1.0
-        rand_num := Ceil(rand * 5)
-        dict[rand_num] := dict[rand_num] + 1
-        i += 1
+arrayAsStr(array) {
+    ; function to format array as string
+    str := "["
+    for key, val in array {
+        str := str . val . ", "
     }
-    return dict
+    StringTrimRight, str, str, 2
+    str := str . "]`r`n"
+    return str
 }
 
 
