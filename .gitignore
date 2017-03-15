@@ -1,6 +1,22 @@
 # passwords file
 passwords.ahk
 
-# misc windows crap
+# Misc windows files
 *.CRS
 *.LIB
+*.tmp
+
+# Word temporary
+~$*.doc*
+
+# Excel temporary
+~$*.xls*
+
+# Excel Backup File
+*.xlk
+
+# PowerPoint temporary
+~$*.ppt*
+
+# Visio autosave temporary files
+*.~vsdx
