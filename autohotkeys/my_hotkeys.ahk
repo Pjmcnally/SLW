@@ -162,6 +162,7 @@ return
 :o:atty::attorney `
 :o:e1::1.97(e)(1)
 :o:e2::1.97(e)(2)
+:o:fsids:: ^v SIDS
 :o:ifq::If there are any questions or there is anything more I can do to help please let me know.
 :o:ifs::If this is satisfactory please sign the attached documents and return them to me.  If not please let me know what changes you would like made.
 :o:pinfo::Patrick{Tab}McNally{Tab}Pmcnally@slwip.com{Tab}{Down}{Tab}{Tab}{Space}
