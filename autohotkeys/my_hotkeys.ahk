@@ -162,7 +162,7 @@ return
 :o:atty::attorney `
 :o:e1::1.97(e)(1)
 :o:e2::1.97(e)(2)
-:o:fsids:: ^v SIDS
+:o:fsids::^v SIDS
 :o:ifq::If there are any questions or there is anything more I can do to help please let me know.
 :o:ifs::If this is satisfactory please sign the attached documents and return them to me.  If not please let me know what changes you would like made.
 :o:pinfo::Patrick{Tab}McNally{Tab}Pmcnally@slwip.com{Tab}{Down}{Tab}{Tab}{Space}
@@ -171,16 +171,21 @@ return
 :o:w/et::w/English Translation
 :o:[on::[Online].  Retrieved from the Internet: <URL: ^v>
 :o:[onar::[Online].  [Archived YYYY-MM-DD].  Retrieved from the Internet: <URL: ^v>
+
+
+; Text replace for date 
+d_format_slash = MM/dd/yyyy  ; This is to be used when entering dates into any date field in FIP because FIP is stupid and doesn't take "-"
 :o:td::
     FormatTime, now,, MM-dd-yy
     sendInput % now
 return
 :o:td\::
-    FormatTime, now,, MM/dd/yyyy
+    FormatTime, now,, %d_format_slash%
     SendInput % now
 return
 :o:tda::  ; To insert arbitrary date
-    FormatTime, date, 20170228, MM/dd/yyyy  ; Change date in this line to change arbitrary date
+    arb_date := 20170322
+    FormatTime, date, %arb_date%, %d_format_slash%  ; Change date in this line to change arbitrary date
     sendInput % date
     send {Tab}internal{Tab}
 return
