@@ -174,18 +174,17 @@ return
 
 
 ; Text replace for date 
-d_format_slash = MM/dd/yyyy  ; This is to be used when entering dates into any date field in FIP because FIP is stupid and doesn't take "-"
 :o:td::
     FormatTime, now,, MM-dd-yy
     sendInput % now
 return
 :o:td\::
-    FormatTime, now,, %d_format_slash%
+    FormatTime, now,, MM/dd/yyyy
     SendInput % now
 return
 :o:tda::  ; To insert arbitrary date
     arb_date := 20170322
-    FormatTime, date, %arb_date%, %d_format_slash%  ; Change date in this line to change arbitrary date
+    FormatTime, date, %arb_date%, MM/dd/yyyy  ; Change date in this line to change arbitrary date
     sendInput % date
     send {Tab}internal{Tab}
 return
