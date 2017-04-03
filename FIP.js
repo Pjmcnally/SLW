@@ -55,7 +55,7 @@ checkPubRow(num)
 
 
 // function to select (and return a count of) all foreign patent docs in the references screen
-function checkForeignPat() {
+(function checkForeignPat() {
     var count = 0;
     var rows = document.querySelectorAll("input.patent_checkRow");
     for (var i=0; i < rows.length; i++) {
@@ -66,12 +66,12 @@ function checkForeignPat() {
         }
     }
     return count;
-}
-checkForeignPat()
+}())
+
 
 
 // function to select (and return a count of) all uncited US relatd matters on the related matters screen
-function checkUSRelated() {
+(function checkUSRelated() {
     var count = 0;
     var rows = document.querySelectorAll("input.check_family");
     for (var i=0; i < rows.length; i++) {
@@ -84,12 +84,12 @@ function checkUSRelated() {
         }
     }
     return count;
-} 
-checkUSRelated()
+}())
+
 
 
 // Function return a sorted list of all related matter families.
-function getUniqueRelated() {
+(function getUniqueRelated() {
     var res_set = new Set();
     var rows = document.querySelectorAll("input.check_family");
     for (var i=0; i < rows.length; i++) {
@@ -103,12 +103,12 @@ function getUniqueRelated() {
     results = Array.from(res_set);
     results.sort();
     return results;
-}
-getUniqueRelated()
+}())
+
 
 
 // Function to check all references cited on an arbitray date (01-01-01)
-function selectTempMarked() {
+(function selectTempMarked() {
     var count = 0;
 
     // Select all matching lines in the patent section
@@ -132,12 +132,11 @@ function selectTempMarked() {
         }
     }
     return count;
-}
-selectTempMarked()
+}())
 
 
 // Function to return list of any reference missing an attachment.
-function checkAttach() {
+(function checkAttach() {
     var results = []
 
     // Select all matching lines in the patent section
@@ -158,5 +157,4 @@ function checkAttach() {
         }
     }
     return results
-}
-checkAttach()
+}())
