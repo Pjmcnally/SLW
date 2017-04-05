@@ -192,12 +192,12 @@ return
 ; Prosecution documents hotstrings
 :o:m312::Application Serial No. ^v, Amendment after allowance under 37 CFR 1.312 mailed `
 :o:mr312::Application Serial No. ^v, Response filed  to Amendment after Final or under 37 CFR 1.312 mailed{Left 54}
-:o:maarf::Application Serial No. ^v Response filed  to Final Office Action mailed{Left 30}
-:o:maarn::Application Serial No. ^v Response filed  to Non Final Office Action mailed{Left 34}
-:o:madar::Application Serial No. ^v Advisory Action mailed `
-:o:mapbr::Application Serial No. ^v Appeal Brief filed `
-:o:maprb::Application Serial No. ^v Reply Brief filed  to Examiner's Answer mailed{Left 28}
-:o:mesr::European Application Serial No. ^v Extended European Search Report mailed `
+:o:maarf::Application Serial No. ^v, Response filed  to Final Office Action mailed{Left 30}
+:o:maarn::Application Serial No. ^v, Response filed  to Non Final Office Action mailed{Left 34}
+:o:madar::Application Serial No. ^v, Advisory Action mailed `
+:o:mapbr::Application Serial No. ^v, Appeal Brief filed `
+:o:maprb::Application Serial No. ^v, Reply Brief filed  to Examiner's Answer mailed{Left 28}
+:o:mesr::European Application Serial No. ^v, Extended European Search Report mailed `
 :o:mexan::Application Serial No. ^v, Examiner's Answer mailed `
 :o:mexin::Application Serial No. ^v, Examiner Interview Summary mailed `
 :o:mfoar::Application Serial No. ^v, Final Office Action mailed `
