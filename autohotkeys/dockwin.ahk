@@ -21,18 +21,14 @@ FileName:="WinPos.txt"
   KeyWait Control  
   KeyWait Alt
 
-  ; Set coordinate mode to screen (otherwise future clicks will be in newly open windows)
-  CoordMode, Mouse, Screen
-	
-  ; Open all desired folders	
-  click 555, 35, 2
-  Sleep, 200
-  click 635, 35, 2
-  Sleep, 200
-  click 705, 35, 2
-  Sleep, 200
-  click 785, 35, 2
-  Sleep, 200
+
+  ; All of the windows I want open are explorer windows.  I changed the "click" method to this
+  ; because it is faster and more consistant.
+  Run, C:\Users\PMcNally\Downloads
+  Run, C:\Users\PMcNally\Documents\bulk downloads
+  Run, C:\Users\PMcNally\bulk print
+  Run, I:\Projects
+  Sleep, 400
 
   ; Place folders in proper location as specified in "WinPos.txt"
   WinGetActiveTitle, SavedActiveWindow
