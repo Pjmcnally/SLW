@@ -130,6 +130,19 @@ return
     worldoxSave("IDS 1449", "ids")
 return
 
+:o:wnum::
+    num := splitMatterNum(clipboard)
+    Send, {Tab}
+    SendInput % num["client_num"]
+    SendInput {Tab}
+    SendInput % num["family_num"]
+    SendInput {Tab}
+    SendInput % num["c_code"]
+    SendInput {Tab}
+    SendInput % num["cont_num"]
+    SendInput {Enter}
+return
+
 
 ; Document types
 :o:aarf::Response to Final Office Action
