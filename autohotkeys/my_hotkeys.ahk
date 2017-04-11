@@ -28,9 +28,11 @@
     ; login to USPTO and USPTO payment
     } else if InStr(Title, "Sign in | USPTO") {
         SendInput %USPTO%
+        Sleep, 1000
+        MsgBox, "This password was actually used"
     ; login to PTFM
     } else if InStr(Title, "PTFM") {
-        SendInput %PTFM%
+    ;     SendInput %PTFM%
     } else if InStr(Title, "USPTO Pay - Choose Checkout Method") {
         SendInput %USPTOPAY%
     }
