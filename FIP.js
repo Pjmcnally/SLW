@@ -102,6 +102,7 @@ checkPubRow(num)
     }
     results = Array.from(res_set);
     results.sort();
+    console.log("Number of related families =", results.length);
     return results;
 }())
 
