@@ -32,7 +32,7 @@
         MsgBox, "This password was actually used"
     ; login to PTFM
     } else if InStr(Title, "PTFM") {
-    ;     SendInput %PTFM%
+        Send %PTFM%
     } else if InStr(Title, "USPTO Pay - Choose Checkout Method") {
         SendInput %USPTOPAY%
     }
@@ -198,7 +198,7 @@ return
     SendInput % now
 return
 :o:tda::  ; To insert arbitrary date
-    arb_date := 20170322
+    arb_date := 20170405
     FormatTime, date, %arb_date%, MM/dd/yyyy  ; Change date in this line to change arbitrary date
     sendInput % date
     send {Tab}internal{Tab}
