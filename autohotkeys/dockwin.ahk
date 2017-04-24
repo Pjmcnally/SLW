@@ -13,8 +13,38 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 CrLf=`r`n
 FileName:="WinPos.txt"
 
+; TODO: Change this so it is derived from the docwin text file (However, I have to change that file first)
+folder_list := { "Downloads": "C:\Users\PMcNally\Downloads"
+               , "bulk downloads": "C:\Users\PMcNally\Documents\bulk downloads"
+               , "bulk print": "C:\Users\PMcNally\bulk print"
+               , "Projects": "I:\Projects"}
 
-;Win-o (Restore window positions from file)
+
+; Minimize all windows (listed above)
+^!m::
+  for elem in folder_list {
+    WinMinimize, % elem
+  }
+Return
+
+
+; Restore all minimized windows (listed above)
+^!r::
+  for elem in folder_list {
+    WinRestore, % elem
+  }
+Return
+
+
+; Close all windows (listed above)
+^!c::
+  for elem in folder_list {
+    WinClose, % elem
+  }
+Return
+
+
+;Restore window positions from file
 ^!o::
  
   ; Wait for the key to be released.  Use one KeyWait for each of the hotkey's modifiers.
@@ -24,10 +54,9 @@ FileName:="WinPos.txt"
 
   ; All of the windows I want open are explorer windows.  I changed the "click" method to this
   ; because it is faster and more consistant.
-  Run, C:\Users\PMcNally\Downloads
-  Run, C:\Users\PMcNally\Documents\bulk downloads
-  Run, C:\Users\PMcNally\bulk print
-  Run, I:\Projects
+  for i in folder_list {
+    Run, % folder_list[i]
+  }
   Sleep, 400
 
   ; Place folders in proper location as specified in "WinPos.txt"
