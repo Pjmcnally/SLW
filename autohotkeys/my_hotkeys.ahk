@@ -198,7 +198,7 @@ return
     SendInput % now
 return
 :o:tda::  ; To insert arbitrary date
-    arb_date := 20170405
+    arb_date := 20170414
     FormatTime, date, %arb_date%, MM/dd/yyyy  ; Change date in this line to change arbitrary date
     sendInput % date
     send {Tab}internal{Tab}
