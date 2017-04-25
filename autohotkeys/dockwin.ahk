@@ -25,7 +25,6 @@ folder_list := { "Downloads": "C:\Users\PMcNally\Downloads"
 ; ==============================================================================
 ; ==============================================================================
 
-
 ; Function to minimize all windows (listed above)
 minimizeAll(array){
   for elem in array {
@@ -151,20 +150,24 @@ RETURN
 ;Win-Shift-0 (Save current windows to file)
 ^!+o::
 
- MsgBox, 4,Dock Windows,Save window positions?
- IfMsgBox, NO, Return
+  ; Check before process.
+  MsgBox, 4,Dock Windows,Save window positions?
+  IfMsgBox, NO, Return
 
- WinGetActiveTitle, SavedActiveWindow
+  ; Save Currently active window.
+  WinGetActiveTitle, SavedActiveWindow
 
- file := FileOpen(FileName, "a")
- if !IsObject(file)
- {
-	MsgBox, Can't open "%FileName%" for writing.
-	Return
- }
+  ; Access file to write to.
+  file := FileOpen(FileName, "w")
+  if !IsObject(file)
+  {
+  MsgBox, Can't open "%FileName%" for writing.
+  Return
+  }
 
-  line:= SectionHeader() . CrLf
-  file.Write(line)
+  ; Write Section header to file.
+  file.Write(SectionHeader() . CrLf)
+
 
   ; Loop through all windows on the entire system
   WinGet, id, list,,, Program Manager
@@ -176,7 +179,7 @@ RETURN
     WinGetClass, this_class, ahk_id %this_id%
     WinGetTitle, this_title, ahk_id %this_id%
 
-	if ( (StrLen(this_title)>0) and (this_title<>"Start") )
+	if ( (StrLen(this_title)>0) and (this_title!="Start") )
 	{
 		line=Title="%this_title%"`,x=%x%`,y=%y%`,width=%width%`,height=%height%`r`n
 		file.Write(line)
@@ -195,14 +198,12 @@ RETURN
 ;Create standardized section header for later retrieval
 SectionHeader()
 {
-	SysGet, MonitorCount, MonitorCount
-	SysGet, MonitorPrimary, MonitorPrimary
-	line=SECTION: Monitors=%MonitorCount%,MonitorPrimary=%MonitorPrimary%
+	SysGet, MonCt, MonitorCount
+	SysGet, MonPrim, MonitorPrimary
+  WinGetPos, x, y, Width, Height, Program Manager
 
-        WinGetPos, x, y, Width, Height, Program Manager
-	line:= line . "; Desktop size:" . x . "," . y . "," . width . "," . height
-
-	Return %line%
+  Return "SECTION: Monitors=" . MonCt . ",MonitorPrimary=" . MonPrim
+       . "; Desktop size:" . x . "," . y . "," . width . "," . height
 }
 
 ;<EOF>
