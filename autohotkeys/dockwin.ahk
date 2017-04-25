@@ -20,43 +20,75 @@ folder_list := { "Downloads": "C:\Users\PMcNally\Downloads"
                , "Projects": "I:\Projects"}
 
 
+
+; Functions to manipulate windows (listed above)
+; ==============================================================================
+; ==============================================================================
+
+
+; Function to minimize all windows (listed above)
+minimizeAll(array){
+  for elem in array {
+    WinMinimize, , %elem%
+  }
+}
+
+
+; function to activate and restore all windows (listed above)
+restoreAll(array){
+  for elem in array {
+    WinActivate, , %elem%
+  }
+}
+
+
+; Function to close all windows (listed above)
+closeAll(array){
+  for elem in array {
+    WinClose, , %elem%
+  }
+}
+
+
+; Function to open all windows (listed above)
+openAll(array){
+  for i in array {
+    Run, % array[i]
+  }
+}
+; ==============================================================================
+; ==============================================================================
+
+
+; Hotkeys to access functions 
+; ==============================================================================
+
 ; Minimize all windows (listed above)
 ^!m::
-  for elem in folder_list {
-    WinMinimize, % elem
-  }
+  minimizeAll(folder_list)
 Return
 
 
 ; Restore all minimized windows (listed above)
 ^!r::
-  for elem in folder_list {
-    WinRestore, % elem
-  }
+  restoreAll(folder_list)
 Return
 
 
 ; Close all windows (listed above)
 ^!c::
-  for elem in folder_list {
-    WinClose, % elem
-  }
+  closeAll(folder_list)
 Return
 
 
 ;Restore window positions from file
 ^!o::
- 
   ; Wait for the key to be released.  Use one KeyWait for each of the hotkey's modifiers.
   KeyWait Control  
   KeyWait Alt
 
-
-  ; All of the windows I want open are explorer windows.  I changed the "click" method to this
-  ; because it is faster and more consistant.
-  for i in folder_list {
-    Run, % folder_list[i]
-  }
+  ; Function to open all 
+  openAll(folder_list)
   Sleep, 400
 
   ; Place folders in proper location as specified in "WinPos.txt"
