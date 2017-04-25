@@ -6,10 +6,10 @@
 
 ;#InstallKeybdHook
 #SingleInstance, Force
-SetTitleMatchMode, 2		; 2: A window's title can contain WinTitle anywhere inside it to be a match. 
-SetTitleMatchMode, Fast		;Fast is default
-DetectHiddenWindows, off	;Off is default
-SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
+SetTitleMatchMode, 2          ; 2: A window's title can contain WinTitle anywhere inside it to be a match.
+SetTitleMatchMode, Fast       ; Fast is default
+DetectHiddenWindows, off      ; Off is default
+SetWorkingDir %A_ScriptDir%   ; Ensures a consistent starting directory.
 CrLf=`r`n
 FileName:="WinPos.txt"
 
@@ -92,55 +92,54 @@ Return
 
   ; Place folders in proper location as specified in "WinPos.txt"
   WinGetActiveTitle, SavedActiveWindow
-  ParmVals:="Title x y height width"
-  SectionToFind:= SectionHeader()
-  SectionFound:= 0
+  ParmVals := "Title x y height width"
+  SectionToFind := SectionHeader()
+  SectionFound := false
  
   Loop, Read, %FileName%
   {
-    if !SectionFound
-    {
-      ;Read through file until correction section found
-      If (A_LoopReadLine<>SectionToFind) 
-	Continue
-    }	  
+    ; When right section discovered set section found and declare variables
+    if (A_LoopReadLine=SectionToFind) {
+      SectionFound := True
+      Win_Title := "", Win_x := 0, Win_y := 0, Win_width := 0, Win_height := 0
+      continue
+    }
 
-		;Exit if another section reached
-		If ( SectionFound and SubStr(A_LoopReadLine,1,8)="SECTION:")
-			Break
+    ; When section concluded break
+    if (A_LoopReadLine="" and SectionFound) {
+      Break
+    }
 
-                SectionFound:=1
-		Win_Title:="", Win_x:=0, Win_y:=0, Win_width:=0, Win_height:=0
+    if (SectionFound) {
+      Loop, Parse, A_LoopReadLine, CSV
+      {
+        EqualPos:=InStr(A_LoopField,"=")
+        Var:=SubStr(A_LoopField,1,EqualPos-1)
+        Val:=SubStr(A_LoopField,EqualPos+1)
+        IfInString, ParmVals, %Var%
+        {
+          ;Remove any surrounding double quotes (")
+          If (SubStr(Val,1,1)=Chr(34))
+          {
+            StringMid, Val, Val, 2, StrLen(Val)-2
+          }
+          Win_%Var%:=Val
+        }
+      }
 
-		Loop, Parse, A_LoopReadLine, CSV 
-		{
-			EqualPos:=InStr(A_LoopField,"=")
-			Var:=SubStr(A_LoopField,1,EqualPos-1)
-			Val:=SubStr(A_LoopField,EqualPos+1)
-			IfInString, ParmVals, %Var%
-			{
-				;Remove any surrounding double quotes (")
-				If (SubStr(Val,1,1)=Chr(34)) 
-				{
-					StringMid, Val, Val, 2, StrLen(Val)-2
-				}
-				Win_%Var%:=Val  
-			}
-		}
-
-		If ( (StrLen(Win_Title) > 0) and WinExist(Win_Title) )
-		{	
-			WinRestore
-			WinActivate
-			WinMove, A,,%Win_x%,%Win_y%,%Win_width%,%Win_height%
-		}
+      If ( (StrLen(Win_Title) > 0) and WinExist(Win_Title) )
+      {
+        WinRestore
+        WinActivate
+        WinMove, A,,%Win_x%,%Win_y%,%Win_width%,%Win_height%
+      }
+    }
 
   }
 
+  ; If no matching section found display error and instructions.
   if !SectionFound
-  {
-    msgbox,,Dock Windows, Section does not exist in %FileName% `nLooking for: %SectionToFind%`n`nTo save a new section, use Win-Shift-0 (zero key above letter P on keyboard)
-  }
+    msgbox,,Dock Windows, Searching for section:`n%SectionToFind%`n`nUnable to find in %FileName%`n`nPlease save a new section and try again.
 
   ;Restore window that was active at beginning of script
   WinActivate, %SavedActiveWindow%
@@ -179,11 +178,11 @@ RETURN
     WinGetClass, this_class, ahk_id %this_id%
     WinGetTitle, this_title, ahk_id %this_id%
 
-	if ( (StrLen(this_title)>0) and (this_title!="Start") )
-	{
-		line=Title="%this_title%"`,x=%x%`,y=%y%`,width=%width%`,height=%height%`r`n
-		file.Write(line)
-   	}
+  if ( (StrLen(this_title)>0) and (this_title!="Start") )
+  {
+    line=Title="%this_title%"`,x=%x%`,y=%y%`,width=%width%`,height=%height%`r`n
+    file.Write(line)
+    }
   }
 
   file.write(CrLf)  ;Add blank line after section
@@ -198,8 +197,8 @@ RETURN
 ;Create standardized section header for later retrieval
 SectionHeader()
 {
-	SysGet, MonCt, MonitorCount
-	SysGet, MonPrim, MonitorPrimary
+  SysGet, MonCt, MonitorCount
+  SysGet, MonPrim, MonitorPrimary
   WinGetPos, x, y, Width, Height, Program Manager
 
   Return "SECTION: Monitors=" . MonCt . ",MonitorPrimary=" . MonPrim
