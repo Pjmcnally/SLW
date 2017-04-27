@@ -116,23 +116,23 @@ splitMatterNum(str) {
 ; Hotstrings
 
 ; Worldox save hotstrings
-:o:wcomm::
+:co:wcomm::
     worldoxSave("IDS Comm", "ids")
 return
 
-:o:wccca::
+:co:wccca::
     worldoxSave("IDS CCCA", "comm")
 return
 
-:o:wxmit::
+:co:wxmit::
     worldoxSave("IDS Xmit", "xmit")
 return
 
-:o:w1449::
+:co:w1449::
     worldoxSave("IDS 1449", "ids")
 return
 
-:o:wnum::
+:co:wnum::
     num := splitMatterNum(clipboard)
     Send, {Tab}
     SendInput % num["client_num"]
@@ -147,57 +147,57 @@ return
 
 
 ; Document types
-:o:aarf::Response to Final Office Action
-:o:aarn::Response to Non Final Office Action
-:o:adaf::Response to Advisory Action
-:o:adar::Advisory Action
-:o:apbr::Appeal Brief
-:o:aprb::Appellant's Reply Brief
-:o:eesr::Extended European Search Report
-:o:exan::Examiner's Answer
-:o:exin::Examiner Interview Summary
-:o:foar::Final Office Action
-:o:iper::International Preliminary Examination Report
-:o:iprp::International Preliminary Report on Patentability
-:o:oarn::Non Final Office Action
-:o:pabr::Pre-Appeal Brief
-:o:pamd::Preliminary Amendment
-:o:prop::Preliminary Report on Patentability
-:o:pubap::Published Application
-:o:rerr::Restriction Requirement
-:o:rrr1mo::Response to Restriction Requirement
+:co:aarf::Response to Final Office Action
+:co:aarn::Response to Non Final Office Action
+:co:adaf::Response to Advisory Action
+:co:adar::Advisory Action
+:co:apbr::Appeal Brief
+:co:aprb::Appellant's Reply Brief
+:co:eesr::Extended European Search Report
+:co:exan::Examiner's Answer
+:co:exin::Examiner Interview Summary
+:co:foar::Final Office Action
+:co:iper::International Preliminary Examination Report
+:co:iprp::International Preliminary Report on Patentability
+:co:oarn::Non Final Office Action
+:co:pabr::Pre-Appeal Brief
+:co:pamd::Preliminary Amendment
+:co:prop::Preliminary Report on Patentability
+:co:pubap::Published Application
+:co:rerr::Restriction Requirement
+:co:rrr1mo::Response to Restriction Requirement
 
 
 ; misc text replace
-:o:asaps::If possible, please sign ASAP.
-:o:asap3mo::If possible, please sign ASAP.  This must be filed soon for us to avoid paying a filing fee.
-:o:asapaarn::If possible, please sign ASAP.  We recently filed a response to non-final office action and we could recieve an office action shortly.
-:o:asaprce::If possible, please sign ASAP.  We recently filed an RCE and could recieve an office action shortly.
-:o:asn::Application Serial No. ` ; "`" creates trailing space.
-:o:atty::attorney `
-:o:e1::1.97(e)(1)
-:o:e2::1.97(e)(2)
-:o:fsids::^v SIDS
-:o:ifq::If there are any questions or there is anything more I can do to help please let me know.
-:o:ifs::If this is satisfactory please sign the attached documents and return them to me.  If not please let me know what changes you would like made.
-:o:pinfo::Patrick{Tab}McNally{Tab}Pmcnally@slwip.com{Tab}{Down}{Tab}{Tab}{Space}
-:o:pnum::^v{Tab}A1{Tab}United States of America{Tab}{Enter}
-:o:w/ec::w/English Claims
-:o:w/et::w/English Translation
-:o:[on::[Online].  Retrieved from the Internet: <URL: ^v>
-:o:[onar::[Online].  [Archived YYYY-MM-DD].  Retrieved from the Internet: <URL: ^v>
+:co:asaps::If possible, please sign ASAP.
+:co:asap3mo::If possible, please sign ASAP.  This must be filed soon for us to avoid paying a filing fee.
+:co:asapaarn::If possible, please sign ASAP.  We recently filed a response to non-final office action and we could recieve an office action shortly.
+:co:asaprce::If possible, please sign ASAP.  We recently filed an RCE and could recieve an office action shortly.
+:co:asn::Application Serial No. ` ; "`" creates trailing space.
+:co:atty::attorney `
+:co:e1::1.97(e)(1)
+:co:e2::1.97(e)(2)
+:co:fsids::^v SIDS
+:co:ifq::If there are any questions or there is anything more I can do to help please let me know.
+:co:ifs::If this is satisfactory please sign the attached documents and return them to me.  If not please let me know what changes you would like made.
+:co:pinfo::Patrick{Tab}McNally{Tab}Pmcnally@slwip.com{Tab}{Down}{Tab}{Tab}{Space}
+:co:pnum::^v{Tab}A1{Tab}United States of America{Tab}{Enter}
+:co:w/ec::w/English Claims
+:co:w/et::w/English Translation
+:co:[on::[Online].  Retrieved from the Internet: <URL: ^v>
+:co:[onar::[Online].  [Archived YYYY-MM-DD].  Retrieved from the Internet: <URL: ^v>
 
 
 ; Text replace for date 
-:o:td::
+:co:td::
     FormatTime, now,, MM-dd-yy
     sendInput % now
 return
-:o:td\::
+:co:td\::
     FormatTime, now,, MM/dd/yyyy
     SendInput % now
 return
-:o:tda::  ; To insert arbitrary date
+:co:tda::  ; To insert arbitrary date
     arb_date := 20170414
     FormatTime, date, %arb_date%, MM/dd/yyyy  ; Change date in this line to change arbitrary date
     sendInput % date
@@ -205,43 +205,43 @@ return
 return
 
 ; Prosecution documents hotstrings
-:o:m312::Application Serial No. ^v, Amendment after allowance under 37 CFR 1.312 mailed `
-:o:mr312::Application Serial No. ^v, Response filed  to Amendment after Final or under 37 CFR 1.312 mailed{Left 54}
-:o:maarf::Application Serial No. ^v, Response filed  to Final Office Action mailed{Left 30}
-:o:maarn::Application Serial No. ^v, Response filed  to Non Final Office Action mailed{Left 34}
-:o:madar::Application Serial No. ^v, Advisory Action mailed `
-:o:mapbr::Application Serial No. ^v, Appeal Brief filed `
-:o:maprb::Application Serial No. ^v, Reply Brief filed  to Examiner's Answer mailed{Left 28}
-:o:mesr::European Application Serial No. ^v, Extended European Search Report mailed `
-:o:mexan::Application Serial No. ^v, Examiner's Answer mailed `
-:o:mexin::Application Serial No. ^v, Examiner Interview Summary mailed `
-:o:mfoar::Application Serial No. ^v, Final Office Action mailed `
-:o:miper::International Application Serial No. ^v, International Preliminary Examination Report mailed `
-:o:miprp::International Application Serial No. ^v, International Preliminary Report on Patentability mailed `
-:o:misr::International Application Serial No. ^v, International Search Report mailed `
-:o:misrwo::International Application Serial No. ^v, International Search Report and Written Opinion mailed `
-:o:mnoar::Application Serial No. ^v, Notice of Allowance mailed `
-:o:moarn::Application Serial No. ^v, Non Final Office Action mailed `
-:o:mpabr::Application Serial No. ^v, Pre-Appeal Brief filed `
-:o:mpamd::Application Serial No. ^v, Preliminary Amendment mailed `
-:o:mprop::International Application Serial No. ^v, Preliminary Report on Patentability mailed `
-:o:mrerr::Application Serial No. ^v, Restriction Requirement mailed `
-:o:mrr1mo::Application Serial No. ^v, Response filed  to Restriction Requirement mailed{Left 34}
-:o:mwo::International Application Serial No. ^v, Written Opinion mailed `
+:co:m312::Application Serial No. ^v, Amendment after allowance under 37 CFR 1.312 mailed `
+:co:mr312::Application Serial No. ^v, Response filed  to Amendment after Final or under 37 CFR 1.312 mailed{Left 54}
+:co:maarf::Application Serial No. ^v, Response filed  to Final Office Action mailed{Left 30}
+:co:maarn::Application Serial No. ^v, Response filed  to Non Final Office Action mailed{Left 34}
+:co:madar::Application Serial No. ^v, Advisory Action mailed `
+:co:mapbr::Application Serial No. ^v, Appeal Brief filed `
+:co:maprb::Application Serial No. ^v, Reply Brief filed  to Examiner's Answer mailed{Left 28}
+:co:mesr::European Application Serial No. ^v, Extended European Search Report mailed `
+:co:mexan::Application Serial No. ^v, Examiner's Answer mailed `
+:co:mexin::Application Serial No. ^v, Examiner Interview Summary mailed `
+:co:mfoar::Application Serial No. ^v, Final Office Action mailed `
+:co:miper::International Application Serial No. ^v, International Preliminary Examination Report mailed `
+:co:miprp::International Application Serial No. ^v, International Preliminary Report on Patentability mailed `
+:co:misr::International Application Serial No. ^v, International Search Report mailed `
+:co:misrwo::International Application Serial No. ^v, International Search Report and Written Opinion mailed `
+:co:mnoar::Application Serial No. ^v, Notice of Allowance mailed `
+:co:moarn::Application Serial No. ^v, Non Final Office Action mailed `
+:co:mpabr::Application Serial No. ^v, Pre-Appeal Brief filed `
+:co:mpamd::Application Serial No. ^v, Preliminary Amendment mailed `
+:co:mprop::International Application Serial No. ^v, Preliminary Report on Patentability mailed `
+:co:mrerr::Application Serial No. ^v, Restriction Requirement mailed `
+:co:mrr1mo::Application Serial No. ^v, Response filed  to Restriction Requirement mailed{Left 34}
+:co:mwo::International Application Serial No. ^v, Written Opinion mailed `
 
 
 ; Matter Management text replacements
-:o:mmdone::
+:co:mmdone::
     FormatTime, now,, MM/dd/yyyy
     SendInput --All office actions, responses, and NOAs entered as references %now% --  PJM
 Return
 
-:o:mmno::
+:co:mmno::
     FormatTime, now,, MM/dd/yyyy
     SendInput --Matter reviewed, no file history found as of %now% -- PJM
 Return
 
-:o:mmnone::
+:co:mmnone::
     FormatTime, now,, MM/dd/yyyy
     SendInput --Matter reviewed, no office actions, responses, or NOAs found as of %now% -- PJM
 Return
@@ -250,28 +250,28 @@ Return
 ; Full email shortcuts
 ; -----------------------------------------------
 ; basic IDS email
-:o:eids::^v - Documents for your signature{Tab}{Enter}{Tab}I have prepared an IDS for ^v.  I examined the specification, disclosure, and file.  I found no additional references.  I prepared the IDS to cite all currently unmarked references in FIP.  If this is satisfactory, please sign and return the attached document.  If not, please let me know what changes you would like made.^{Home}
+:co:eids::^v - Documents for your signature{Tab}{Enter}{Tab}I have prepared an IDS for ^v.  I examined the specification, disclosure, and file.  I found no additional references.  I prepared the IDS to cite all currently unmarked references in FIP.  If this is satisfactory, please sign and return the attached document.  If not, please let me know what changes you would like made.^{Home}
 
 ; Continuation IDS where not all references were cited in parent.
-:o:eidsconn::^v - Documents for your signature{Tab}{Enter}{Tab}I have prepared an IDS for ^v.  Since it is a continuation/divisional I compared all of the unmarked references to those in its parent.  Some of the references unmarked in ^v have not been cited in the parent (see attached spreadsheet).  Despite this, I have prepared this IDS to cite all unmarked references (this includes those references not cited in the parent).  If this is satisfactory, please sign and return the attached document.  If not, please let me know what changes you would like made.^{Home}
+:co:eidsconn::^v - Documents for your signature{Tab}{Enter}{Tab}I have prepared an IDS for ^v.  Since it is a continuation/divisional I compared all of the unmarked references to those in its parent.  Some of the references unmarked in ^v have not been cited in the parent (see attached spreadsheet).  Despite this, I have prepared this IDS to cite all unmarked references (this includes those references not cited in the parent).  If this is satisfactory, please sign and return the attached document.  If not, please let me know what changes you would like made.^{Home}
 
 ; Continuation IDS where only citing references cited in parent
-:o:eidsconp::^v - Documents for your signature{Tab}{Enter}{Tab}I have prepared an IDS for ^v.  I have prepared this IDS to cite all references previously cited in the parent.  If this is satisfactory, please sign and return the attached document.  If not, please let me know what changes you would like made.^{Home}
+:co:eidsconp::^v - Documents for your signature{Tab}{Enter}{Tab}I have prepared an IDS for ^v.  I have prepared this IDS to cite all references previously cited in the parent.  If this is satisfactory, please sign and return the attached document.  If not, please let me know what changes you would like made.^{Home}
 
 ; Continuation IDS where all references were cited in parent
-:o:eidscony::^v - Documents for your signature{Tab}{Enter}{Tab}I have prepared an IDS for ^v.  Since it is a continuation/divisional I compared all of the unmarked references to those in its parent.  All references currently unmarked in ^v have been cited in its parent matter.  Therefore, I have prepared this IDS to cite all unmarked references.  If this is satisfactory, please sign and return the attached document.  If not, please let me know what changes you would like made.^{Home}
+:co:eidscony::^v - Documents for your signature{Tab}{Enter}{Tab}I have prepared an IDS for ^v.  Since it is a continuation/divisional I compared all of the unmarked references to those in its parent.  All references currently unmarked in ^v have been cited in its parent matter.  Therefore, I have prepared this IDS to cite all unmarked references.  If this is satisfactory, please sign and return the attached document.  If not, please let me know what changes you would like made.^{Home}
 
 ; memo email for new IDS
-:o:eidsmemo::^v - IDS memo for your review{Tab}{Enter}{Tab}I have prepared an IDS memo for ^v.  Please review the memo and other attached documents.  Let me know which references you would like cited in this matter.^{Home}
+:co:eidsmemo::^v - IDS memo for your review{Tab}{Enter}{Tab}I have prepared an IDS memo for ^v.  Please review the memo and other attached documents.  Let me know which references you would like cited in this matter.^{Home}
 
 ; reminder email
-:o:eout:: Outstanding SIDS - Signature Reminder{Tab}{Enter}{Tab}I have attached all outstanding IDS/SIDS out for your signature.  Please disregard all previous requests for signature.  Please sign all the attached documents and return them to me.  ^{Home}
+:co:eout:: Outstanding SIDS - Signature Reminder{Tab}{Enter}{Tab}I have attached all outstanding IDS/SIDS out for your signature.  Please disregard all previous requests for signature.  Please sign all the attached documents and return them to me.  ^{Home}
 
 ; email for SIDS and RCE
-:o:erce::^v - Documents for your signature{Tab}{Enter}{Tab}I have prepared an SIDS and RCE for ^v.  I prepared the SIDS to cite all currently unmarked references in FIP.  If this is satisfactory, please sign and return the attached document.  If not, please let me know what changes you would like made.^{Home}
+:co:erce::^v - Documents for your signature{Tab}{Enter}{Tab}I have prepared an SIDS and RCE for ^v.  I prepared the SIDS to cite all currently unmarked references in FIP.  If this is satisfactory, please sign and return the attached document.  If not, please let me know what changes you would like made.^{Home}
 
 ; basic SIDS email
-:o:esids::^v - Documents for your signature{Tab}{Enter}{Tab}I have prepared a SIDS for ^v.  I prepared the SIDS to cite all currently unmarked references in FIP.  If this is satisfactory, please sign and return the attached document.  If not, please let me know what changes you would like made.^{Home}
+:co:esids::^v - Documents for your signature{Tab}{Enter}{Tab}I have prepared a SIDS for ^v.  I prepared the SIDS to cite all currently unmarked references in FIP.  If this is satisfactory, please sign and return the attached document.  If not, please let me know what changes you would like made.^{Home}
 
 ; basic foreign reference SIDS email
-:o:esidsfor::^v - Documents for your signature{Tab}{Enter}{Tab}I have prepared a SIDS for ^v in response to a foreign office action received in a related matter. I prepared the SIDS to cite the received document and all currently unmarked references in FIP.  If this is satisfactory, please sign and return the attached document.  If not, please let me know what changes you would like made.^{Home}
+:co:esidsfor::^v - Documents for your signature{Tab}{Enter}{Tab}I have prepared a SIDS for ^v in response to a foreign office action received in a related matter. I prepared the SIDS to cite the received document and all currently unmarked references in FIP.  If this is satisfactory, please sign and return the attached document.  If not, please let me know what changes you would like made.^{Home}
