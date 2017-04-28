@@ -5,7 +5,7 @@
 
 
 ; Hotkey to reload script as I frequently save and edit it.
-^!r::Reload  ; Assign Ctrl-Alt-R as a hotkey to restart the script.
+^+r::Reload  ; Assign Ctrl-Alt-R as a hotkey to restart the script.
 
 
 ; script to log me into to various work sites.
@@ -198,7 +198,7 @@ return
     SendInput % now
 return
 :co:tda::  ; To insert arbitrary date
-    arb_date := 20170414
+    arb_date := 20170417
     FormatTime, date, %arb_date%, MM/dd/yyyy  ; Change date in this line to change arbitrary date
     sendInput % date
     send {Tab}internal{Tab}
