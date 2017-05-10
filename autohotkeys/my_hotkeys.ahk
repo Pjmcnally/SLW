@@ -186,6 +186,18 @@ return
 :co:w/et::w/English Translation
 :co:[on::[Online].  Retrieved from the Internet: <URL: ^v>
 :co:[onar::[Online].  [Archived YYYY-MM-DD].  Retrieved from the Internet: <URL: ^v>
+:c*:isbef::   ; This function is a bit of a mess since I can't just add months.  It is a bit hacky but works.
+    Input, months, , {space}{enter}{tab},]  ; As hiddne part of hotstring wait for user to input months to deadline
+    if (months) {                           ; If Nonths exist 
+        Today := A_Now                      ; Store Today
+        days_to_add := months * 30          ; Calc days by Months * 30. This is crude but close enough.
+        Today += %days_to_add%, days        ; Add days to date.
+        FormatTime, deadline, %Today%, MMM yyyy
+    } else {                                ; If no month entered set ??? as output.
+        deadline := "???"
+    }
+    SendInput % "IDS/SIDS before first OA (Estimated " . deadline . ")"
+return
 
 
 ; Text replace for date 
