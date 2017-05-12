@@ -198,7 +198,14 @@ return
     }
     SendInput % "IDS/SIDS before first OA (Estimated " . deadline . ")"
 return
-
+:c:esearch::  ; Quick little hacky hostring to help with email seach
+    day := 22
+    while (day <= 31) {
+        SendInput % """May{space}" . day . ","" OR{space}"
+        day += 1
+    }
+    SendInput {backspace 3}
+return
 
 ; Text replace for date 
 :co:td::
