@@ -286,6 +286,9 @@ Return
 ; reminder email
 :co:eout:: Outstanding SIDS - Signature Reminder{Tab}{Enter}{Tab}I have attached all outstanding IDS/SIDS out for your signature.  Please disregard all previous requests for signature.  Please sign all the attached documents and return them to me.  ^{Home}
 
+; reminder email - Quit
+:co:eoutq:: Outstanding SIDS - Signature Reminder{Tab}{Enter}{Tab}I have attached all outstanding IDS/SIDS out for your signature.  Please disregard all previous requests for signature.  Please sign all the attached documents and return them to me.{Enter 2}{Tab}Please sign and return all documents ASAP as my last day is Friday May 22nd.  I am trying to clear out my docket before then.^{Home}
+
 ; email for SIDS and RCE
 :co:erce::^v - Documents for your signature{Tab}{Enter}{Tab}I have prepared an SIDS and RCE for ^v.  I prepared the SIDS to cite all currently unmarked references in FIP.  If this is satisfactory, please sign and return the attached document.  If not, please let me know what changes you would like made.^{Home}
 
