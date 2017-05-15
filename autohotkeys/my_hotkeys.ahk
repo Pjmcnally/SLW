@@ -173,6 +173,7 @@ return
 :co:asap3mo::If possible, please sign ASAP.  This must be filed soon for us to avoid paying a filing fee.
 :co:asapaarn::If possible, please sign ASAP.  We recently filed a response to non-final office action and we could recieve an office action shortly.
 :co:asaprce::If possible, please sign ASAP.  We recently filed an RCE and could recieve an office action shortly.
+:co:asapq:If possible please sign ASAP as my last day is Friday May 22nd.
 :co:asn::Application Serial No. ` ; "`" creates trailing space.
 :co:atty::attorney `
 :co:e1::1.97(e)(1)
