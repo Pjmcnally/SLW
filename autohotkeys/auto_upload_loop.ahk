@@ -164,6 +164,7 @@ class UploadSession {
 
         IfWinNotActive, % This.browser_window, , WinActivate, % This.browser_window,
         WinWaitActive, % This.browser_window
+        ; Sleep, 10000  ; Wait for file to be "recieved" only use when virtual desktop is behaving weirdly
         Send, {TAB}i
         if (A_Index <= This.foreign_count) {
             ; Sleep, % UploadSession.submitDelay ; option sleep if going to fast for computer. Remove first ";" to activate
