@@ -298,3 +298,68 @@ Return
 
 ; basic foreign reference SIDS email
 :co:esidsfor::^v - Documents for your signature{Tab}{Enter}{Tab}I have prepared a SIDS for ^v in response to a foreign office action received in a related matter. I prepared the SIDS to cite the received document and all currently unmarked references in FIP.  If this is satisfactory, please sign and return the attached document.  If not, please let me know what changes you would like made.^{Home}
+
+
+^!d::
+    ; this is a hacky test script
+    clipboard =  
+    (
+        // function to select all references to be downloaded for submission with IDS/SIDS
+        (function checkDownload(){
+            function checkAttach() {
+                var results = []
+
+                // Select all matching lines in the patent section
+                var patent_rows = document.querySelectorAll("input.patent_checkRow");
+                for (var i=0; i < patent_rows.length; i++) {
+                    var parent = patent_rows[i].parentNode.parentNode;
+                    if (parent.children[2].childElementCount < 2) {
+                        results.push(parent.children[1].firstChild.firstChild.textContent);
+                    }
+                }
+
+                // Select all matching lines in the NPL section 
+                var pub_rows = document.querySelectorAll("input.pub_checkRow")
+                for (var j=0; j < pub_rows.length; j++) {
+                    var parent = pub_rows[j].parentNode.parentNode;
+                    if (parent.children[2].childElementCount < 2) {
+                        results.push(parent.children[1].firstChild.firstChild.textContent);
+                    }
+                }
+                return results
+            }
+
+            function checkForeignPat() {
+                var count = 0;
+                var rows = document.querySelectorAll("input.patent_checkRow");
+                for (var i=0; i < rows.length; i++) {
+                    var parent = rows[i].parentNode.parentNode;
+                    if (parent.children[6].textContent != "US") {
+                        parent.firstChild.click();
+                        count += 1;
+                    }
+                }
+                return count;
+            }
+
+            function checkNPL() {
+                var count = 0;
+                var rows = document.querySelectorAll("input.pub_checkRow");
+                for (var i=0; i < rows.length; i++) {
+                    var parent = rows[i].parentNode.parentNode;
+                    parent.firstChild.click();
+                    count += 1;
+                    }
+                return count;
+            }
+            var noFile = checkAttach()
+            if (noFile.length == 0) {
+                noFile = 0
+            }
+            var forCount = checkForeignPat()
+            var nplCount = checkNPL()
+            console.log("Refs missing attachments: " + noFile + ".\n" + forCount + " Foreign and " + nplCount + " NPL refs checked and ready to download.")    
+        }())
+    )
+    SendInput ^v
+return
