@@ -302,6 +302,8 @@ Return
 
 ^!d::
     ; this is a hacky test script
+    temp := clipboard
+    Sleep, 100
     clipboard =  
     (
         // function to select all references to be downloaded for submission with IDS/SIDS
@@ -362,4 +364,6 @@ Return
         }())
     )
     SendInput ^v
+    Sleep, 100
+    clipboard := temp
 return
