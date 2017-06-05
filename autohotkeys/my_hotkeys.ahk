@@ -8,37 +8,6 @@
 ^+r::Reload  ; Assign Ctrl-Alt-R as a hotkey to restart the script.
 
 
-; script to log me into to various work sites.
-; Passwords stored in external file (Not in Git).
-^!l::
-    #Include passwords.ahk ; Passwords stored in file not tracked by Git
-    ; Wait for the key to be released.  Use one KeyWait for each of the hotkey's modifiers.
-    KeyWait Control
-    KeyWait Alt
-
-    ; Get title of window.  To select the right password.
-    WinGetTitle, Title, A
-
-    ; Login to FIP (All browsers)
-    if InStr(Title, "FoundationIP") {
-        SendInput %FIP%
-    ; login to EFS
-    } else if InStr(Title, "USPTO User Authentication") {
-        Send %EFS% ; SendInput doesn't work here.  Not sure why (too fast maybe)
-    ; login to USPTO and USPTO payment
-    } else if InStr(Title, "Sign in | USPTO") {
-        SendInput %USPTO%
-        Sleep, 1000
-        MsgBox, "This password was actually used"
-    ; login to PTFM
-    } else if InStr(Title, "PTFM") {
-        Send %PTFM%
-    } else if InStr(Title, "USPTO Pay - Choose Checkout Method") {
-        SendInput %USPTOPAY%
-    }
-Return
-
-
 ; Script to enter "United States of America
 ^!u::
     ; Wait for the key to be released.  Use one KeyWait for each of the hotkey's modifiers.
@@ -173,7 +142,7 @@ return
 :co:asap3mo::If possible, please sign ASAP.  This must be filed soon for us to avoid paying a filing fee.
 :co:asapaarn::If possible, please sign ASAP.  We recently filed a response to non-final office action and we could recieve an office action shortly.
 :co:asaprce::If possible, please sign ASAP.  We recently filed an RCE and could recieve an office action shortly.
-:co:asapq::Also, If possible please sign ASAP as my last day is Friday May 19th and I am trying to finish this up so I don’t have to transfer it to someone else.
+:co:asapq::Also, If possible please sign ASAP as my last day is Friday May 19th and I am trying to finish this up so I donâ€™t have to transfer it to someone else.
 :co:asn::Application Serial No. ` ; "`" creates trailing space.
 :co:atty::attorney `
 :co:e1::1.97(e)(1)
