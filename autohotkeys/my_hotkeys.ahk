@@ -21,6 +21,17 @@ Return
 ; ------------------------------------------------------------------------------
 ; Functions used in hotstrings
 
+f_date(date:="", format:="MM-dd-yyyy") {
+    /* Function to return formatted date.
+     * ARGS:
+     *     date (int): Optional.  If not provided will default to current date & time.  Otherwise, specify all or the leading part of a timestamp in the YYYYMMDDHH24MISS format
+     *     format (str): Optional. If not provided will default to MM-dd-yyyy.  Provide any format (as string)  https://autohotkey.com/docs/commands/FormatTime.html
+    */
+    
+    FormatTime, res, %date%, %format%
+    return res
+}
+
 ; navigates through workdox save UI and fills in blanks
 worldoxSave(desc, doc_type) {
     num := splitMatterNum(clipboard)
@@ -159,10 +170,10 @@ return
 :c*:isbef::   ; This function is a bit of a mess since I can't just add months.  It is a bit hacky but works.
     Input, months, , {space}{enter}{tab},]  ; As hiddne part of hotstring wait for user to input months to deadline
     if (months) {                           ; If Nonths exist 
-        Today := A_Now                      ; Store Today
+        deadline := A_Now                     ; Store Today
         days_to_add := months * 30          ; Calc days by Months * 30. This is crude but close enough.
-        Today += %days_to_add%, days        ; Add days to date.
-        FormatTime, deadline, %Today%, MMM yyyy
+        deadline += %days_to_add%, days       ; Add days to date.
+        deadline := f_date(deadline, "MMM yyyy")
     } else {                                ; If no month entered set ??? as output.
         deadline := "???"
     }
@@ -179,17 +190,14 @@ return
 
 ; Text replace for date 
 :co:td::
-    FormatTime, now,, MM-dd-yy
-    sendInput % now
+    sendInput % f_date(,"MM-dd-yy")
 return
 :co:td\::
-    FormatTime, now,, MM/dd/yyyy
-    SendInput % now
+    sendInput % f_date(,"MM/dd/yyyy")
 return
 :co:tda::  ; To insert arbitrary date
     arb_date := 20170417
-    FormatTime, date, %arb_date%, MM/dd/yyyy  ; Change date in this line to change arbitrary date
-    sendInput % date
+    sendInput % f_date(arb_date, "MM/dd/yyyy")
     send {Tab}internal{Tab}
 return
 
@@ -221,18 +229,15 @@ return
 
 ; Matter Management text replacements
 :co:mmdone::
-    FormatTime, now,, MM/dd/yyyy
-    SendInput --All office actions, responses, and NOAs entered as references %now% --  PJM
+    SendInput % "--All office actions, responses, and NOAs entered as references " . f_date(,"MM/dd/yyyy") . " --  PJM"
 Return
 
 :co:mmno::
-    FormatTime, now,, MM/dd/yyyy
-    SendInput --Matter reviewed, no file history found as of %now% -- PJM
+    SendInput % "--Matter reviewed, no file history found as of " . f_date(,"MM/dd/yyyy") . " -- PJM"
 Return
 
 :co:mmnone::
-    FormatTime, now,, MM/dd/yyyy
-    SendInput --Matter reviewed, no office actions, responses, or NOAs found as of %now% -- PJM
+    SendInput % "--Matter reviewed, no office actions, responses, or NOAs found as of " . f_date(,"MM/dd/yyyy") . " -- PJM"
 Return
 
 
