@@ -21,6 +21,17 @@ Return
 ; ------------------------------------------------------------------------------
 ; Functions used in hotstrings
 
+f_date(date:="", format:="MM-dd-yyyy") {
+    /* Function to return formatted date.
+     * ARGS:
+     *     date (int): Optional.  If not provided will default to current date & time.  Otherwise, specify all or the leading part of a timestamp in the YYYYMMDDHH24MISS format
+     *     format (str): Optional. If not provided will default to MM-dd-yyyy.  Provide any format (as string)  https://autohotkey.com/docs/commands/FormatTime.html
+    */
+    
+    FormatTime, res, %date%, %format%
+    return res
+}
+
 ; navigates through workdox save UI and fills in blanks
 worldoxSave(desc, doc_type) {
     num := splitMatterNum(clipboard)
